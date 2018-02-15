@@ -1,3 +1,4 @@
+import Foundation
 import Cocoa
 import ReSwift
 
@@ -7,29 +8,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   let cliWorker = DispatchQueue(label: "cli-worker")
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {
-    self.window.contentView = RootView(core: self.core)
+    window.contentView = RootView(core: self.core)
     
-    self.window.setContentSize(NSSize(width: 512, height: 512))
-    self.window.contentAspectRatio = NSSize(width: 1, height: 1)
-    self.window.minSize = NSSize(width: 256, height: 256)
+    window.setContentSize(NSSize(width: 512, height: 512))
+    window.contentAspectRatio = NSSize(width: 1, height: 1)
+    window.minSize = NSSize(width: 256, height: 256)
     
-    self.window.styleMask = NSWindow.StyleMask(rawValue:
+    window.styleMask = NSWindow.StyleMask(rawValue:
       NSWindow.StyleMask.closable.rawValue |
       NSWindow.StyleMask.miniaturizable.rawValue |
       NSWindow.StyleMask.titled.rawValue |
       NSWindow.StyleMask.resizable.rawValue)
     
-    self.window.title = ProcessInfo.processInfo.processName
+    window.title = ProcessInfo.processInfo.processName
     
-    self.window.center()
-    self.window.makeKeyAndOrderFront(nil)
+    window.center()
+    window.makeKeyAndOrderFront(nil)
     
-    self.cliWorker.async() {
+    cliWorker.async() {
       while true {
-        _ = readLine()
-        
+        let userInput = readLine()
+
+        let newBase = NSColor.red
+        let action = CoreAction.setBase(newBase)
+
         DispatchQueue.main.async
-          { self.core.dispatch(RandomColor()) }
+          { self.core.dispatch(action) }
       }
     }
   }
@@ -38,5 +42,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // Insert code here to tear down your application
   }
 }
-
 

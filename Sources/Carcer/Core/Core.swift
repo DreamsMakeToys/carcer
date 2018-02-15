@@ -1,23 +1,27 @@
 import Cocoa
 import ReSwift
 
+typealias Color = NSColor
+typealias Layer = NSRect
+
 struct CoreState: StateType {
-  var color: NSColor = NSColor.black
+  var base = Color.black
 }
 
-struct RandomColor: Action {}
+enum CoreAction: Action {
+  case setBase(Color)
+}
 
 func appReducer(action: Action, state: CoreState?) -> CoreState {
-  var state = state ?? CoreState()
-  
-  switch action {
-    case _ as RandomColor:
-      state.color = NSColor(white: CGFloat(Float(arc4random()) / Float(UINT32_MAX)), alpha: 1)
-    
-    default: break
+  let coreAction = action as! CoreAction
+  var newState = state ?? CoreState()
+
+  switch coreAction {
+    case .setBase(let color):
+      newState.base = color
   }
   
-  return state
+  return newState
 }
 
 func createCore() -> Store<CoreState> {

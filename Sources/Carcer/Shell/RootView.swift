@@ -7,7 +7,7 @@ class RootView: NSView, StoreSubscriber {
   override func draw(_ dirtyRect: NSRect) {
     let context = NSGraphicsContext.current!.cgContext
     
-    context.setFillColor(self.state.color.cgColor)
+    context.setFillColor(self.state.base.cgColor)
     context.fill(dirtyRect)
   }
   
@@ -19,6 +19,7 @@ class RootView: NSView, StoreSubscriber {
   init(core: Store<CoreState>) {
     self.state = core.state
     super.init(frame: NSRect())
+    
     core.subscribe(self)
   }
   
