@@ -5,12 +5,10 @@ import PackageDescription
 
 let package = Package(
   name: "Carcer",
-  dependencies: [
-    .package(url: "https://github.com/ReSwift/ReSwift.git", from: "4.0.0"),
-  ],
+  dependencies: [],
   targets: [
     .target(
       name: "Carcer",
-      dependencies: ["ReSwift"]),
+      dependencies: []),
   ]
 )

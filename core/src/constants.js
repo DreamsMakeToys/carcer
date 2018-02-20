@@ -1,0 +1,7 @@
+const Action = {
+  SET_BASE: 'SET_BASE',
+  SYSTEM_LOADING: 'SYSTEM_LOADING',
+  SYSTEM_LOADED: 'SYSTEM_LOADED'
+}
+
+export { Action }
