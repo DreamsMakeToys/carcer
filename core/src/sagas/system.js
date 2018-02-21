@@ -11,12 +11,12 @@ function* _initialize(api) {
     payload: api
   })
 
-  const commandChannel = yield call(Command.createChannel)
-
-  yield fork(_handleCommand, commandChannel)
+  yield fork(_commandService)
 }
 
-function* _handleCommand(channel) {
+function* _commandService() {
+  const channel = yield call(Command.createChannel)
+
   while (true) {
     const message = yield take(channel)
 
