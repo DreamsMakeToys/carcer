@@ -1,5 +1,5 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
   entry: './src/index.js',
@@ -7,6 +7,7 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  target: 'node',
   module: {
     rules: [
       {
@@ -18,5 +19,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [new HtmlWebpackPlugin()]
+  externals: [nodeExternals()]
 }

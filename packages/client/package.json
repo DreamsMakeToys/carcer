@@ -1,23 +1,27 @@
 {
-  "name": "carcer-core",
+  "name": "carcer-shell",
   "version": "0.1.0",
   "main": "src/index.js",
   "license": "MIT",
   "dependencies": {
+    "ink": "^0.4.1",
+    "ink-redux": "^1.0.0",
     "ramda": "^0.25.0",
     "redux": "^3.7.2",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^0.16.0",
+    "window-size": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "html-webpack-plugin": "^2.30.1",
+    "nodemon": "^1.15.1",
     "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack-node-externals": "^1.6.0"
   },
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server"
+    "dev": "webpack --watch & nodemon dist/bundle.js"
   }
 }

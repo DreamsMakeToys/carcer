@@ -26,7 +26,4 @@ const bindSaga = (runSaga, saga) => {
   return (...args) => boundSaga(...args).done
 }
 
-//
-createCore().then(store => {
-  global.carcer = store
-})
+export default createCore
