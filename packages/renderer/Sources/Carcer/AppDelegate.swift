@@ -1,26 +1,11 @@
 import Foundation
-import JavaScriptCore
 import Cocoa
+import SocketIO
 
 class AppDelegate: NSObject, NSApplicationDelegate {
   let window = NSWindow()
-  let cliWorker = DispatchQueue(label: "cli-worker")
-  let context: JSContext
-  let cliService: CommandService
-  
-  override init() {
-    let jsVM = JSVirtualMachine()
-    let jsContext = JSContext(virtualMachine: jsVM)!
-    jsContext.exceptionHandler = { print($1!) }
-    
-    print(Bundle.main.resourcePath)
-    let bundleUrl = Bundle.main.url(forResource: "carcer", withExtension: "js")!
-    let bundleScript = try! String(contentsOf: bundleUrl, encoding: String.Encoding.utf8)
-    jsContext.evaluateScript(bundleScript)
-    
-    context = jsContext
-    cliService = CommandService(context: jsContext)
-  }
+  let serviceWorker = DispatchQueue(label: "service-worker")
+  var socketManager: SocketManager!
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     window.contentView = CrystalView()
@@ -40,15 +25,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     window.center()
     window.makeKeyAndOrderFront(nil)
     
-    cliWorker.async() {
+    serviceWorker.async() {
       while true {
-        let userInput = readLine()!
+//        let userInput = readLine()!
 
-        DispatchQueue.main.async {
-          self.cliService.post(message: userInput)
-        }
+        DispatchQueue.main.async {}
       }
     }
+    
+    socketManager = SocketManager(
+      socketURL: URL(string: "http://localhost:3000")!,
+      config: [.compress])
+    
+    let socket = socketManager.defaultSocket
+    
+    socket.on(clientEvent: .connect) {
+      _, _ in
+      
+      let connectedMessage: SocketData = [
+        "type": "RENDERER_CONNECTED",
+        "payload": [String: String]()
+      ]
+      
+      socket.emit("message", connectedMessage)
+    }
+    
+    socket.connect()
   }
   
   func applicationWillTerminate(_ aNotification: Notification) {

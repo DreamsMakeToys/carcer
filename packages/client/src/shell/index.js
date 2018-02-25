@@ -1,14 +1,21 @@
 import { h, Text, Component } from 'ink'
+import { connect } from 'ink-redux'
 import WindowSize from 'window-size'
-
 import TextInput from './textinput'
 
-const Shell = ({ inputWidth, value, size, handleInput, handleSubmit }) => (
+const Shell = ({
+  status,
+  inputWidth,
+  value,
+  size,
+  handleInput,
+  handleSubmit
+}) => (
   <div>
     <Text>
       {'╭──────────────────╮ '}
-      <Text bold>Carcer: </Text>
-      <Text>a toy for projection</Text>
+      <Text bold>{status.severity}: </Text>
+      <Text>{status.message}</Text>
     </Text>
     <div />
 
@@ -37,6 +44,11 @@ const Shell = ({ inputWidth, value, size, handleInput, handleSubmit }) => (
   </div>
 )
 
+const select = state => ({
+  status: state.crystal.status,
+  evaluateCommand: state.api.evaluate
+})
+
 const applyBehavior = Comp => {
   class Instance extends Component {
     constructor(props) {
@@ -58,11 +70,12 @@ const applyBehavior = Comp => {
       process.stdout.on('resize', this.setSize)
     }
 
-    render({}, { size, value }) {
+    render({ status }, { size, value }) {
       const inputWidth = size.width - 21 - 1
 
       return (
         <Comp
+          status={status}
           inputWidth={inputWidth}
           value={value}
           handleInput={this.handleInput}
@@ -75,6 +88,7 @@ const applyBehavior = Comp => {
       const { width, height } = WindowSize.get()
       const size = { width, height }
 
+      console.clear()
       this.setState({ size })
     }
 
@@ -83,11 +97,15 @@ const applyBehavior = Comp => {
     }
 
     handleSubmit(value) {
-      this.setState({ value: '' })
+      const { evaluateCommand } = this.props
+
+      evaluateCommand(value).then(() => {
+        this.setState({ value: '' })
+      })
     }
   }
 
-  return Instance
+  return connect(select)(Instance)
 }
 
 export default applyBehavior(Shell)

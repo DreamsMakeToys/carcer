@@ -5,10 +5,12 @@ import PackageDescription
 
 let package = Package(
   name: "Carcer",
-  dependencies: [],
+  dependencies: [
+    .package(url: "https://github.com/socketio/socket.io-client-swift", from: "13.0.0")
+  ],
   targets: [
     .target(
       name: "Carcer",
-      dependencies: []),
+      dependencies: ["SocketIO"]),
   ]
 )
