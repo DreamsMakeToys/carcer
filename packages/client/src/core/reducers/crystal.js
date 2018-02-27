@@ -1,8 +1,11 @@
 import { Action } from '../constants'
-import { createColor } from '../utils/color'
 
 const initialState = {
-  color: createColor(0, 0, 0),
+  color: {
+    hue: 0,
+    saturation: 0,
+    lightness: 0
+  },
   status: {
     severity: 'Carcer',
     message: 'a toy for projection'

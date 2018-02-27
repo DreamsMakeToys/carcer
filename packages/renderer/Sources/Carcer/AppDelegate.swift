@@ -4,8 +4,7 @@ import SocketIO
 
 class AppDelegate: NSObject, NSApplicationDelegate {
   let window = NSWindow()
-  let serviceWorker = DispatchQueue(label: "service-worker")
-  var socketManager: SocketManager!
+  let clientService = ClientService()
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     window.contentView = CrystalView()
@@ -24,38 +23,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     window.center()
     window.makeKeyAndOrderFront(nil)
-    
-    serviceWorker.async() {
-      while true {
-//        let userInput = readLine()!
+  }
+}
 
-        DispatchQueue.main.async {}
-      }
-    }
-    
-    socketManager = SocketManager(
+class ClientService {
+  private let manager: SocketManager
+  private let socket: SocketIOClient
+  
+  init() {
+    manager = SocketManager(
       socketURL: URL(string: "http://localhost:3000")!,
       config: [.compress])
     
-    let socket = socketManager.defaultSocket
+    socket = manager.defaultSocket
     
-    socket.on(clientEvent: .connect) {
-      _, _ in
-      
+    socket.on(clientEvent: .connect) { _, _ in
       let connectedMessage: SocketData = [
         "type": "RENDERER_CONNECTED",
         "payload": [String: String]()
       ]
       
-      socket.emit("message", connectedMessage)
+      self.socket.emit("message", connectedMessage)
+    }
+    
+    socket.on("message") { data, _ in
+      print(data)
     }
     
     socket.connect()
   }
-  
-  func applicationWillTerminate(_ aNotification: Notification) {
-    // Insert code here to tear down your application
-  }
 }
+
+
 
 
