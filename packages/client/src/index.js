@@ -1,6 +1,5 @@
-import { h, render, div } from 'ink'
+import { h, render } from 'ink'
 import { Provider } from 'ink-redux'
-
 import createCore from './core'
 import Shell from './shell'
 
@@ -10,7 +9,6 @@ const renderApp = store => {
       <Shell />
     </Provider>
   )
-
   console.clear()
   render(app)
 }

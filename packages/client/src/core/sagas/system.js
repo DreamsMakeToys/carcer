@@ -1,5 +1,4 @@
-import { call, put, spawn, take } from 'redux-saga/effects'
-
+import { call, fork, put, select, spawn, take } from 'redux-saga/effects'
 import { Action } from '../constants'
 import Renderer from '../services/renderer'
 import { parse } from '../utils/command'
@@ -19,11 +18,14 @@ function* _rendererService() {
     type: Action.RENDERER_LOADED,
     payload: { socket }
   })
+  yield fork(_handleMessage, channel)
+}
+
+function* _handleMessage(channel) {
   while (true) {
     const message = yield take(channel)
     switch (message.type) {
       case 'RENDERER_CONNECTED':
-        console.log(message)
         break
       default:
         console.log(message)
@@ -56,7 +58,7 @@ function* evaluate(rawCommand) {
   }
   if (status === null)
     status = {
-      severity: 'Carcer',
+      severity: 'Info',
       message: rawCommand
     }
   yield put({
@@ -68,8 +70,20 @@ function* evaluate(rawCommand) {
 function* setBase(color) {
   yield put({
     type: Action.SET_BASE,
-    payload: { color }
+    payload: { base: color }
   })
+  yield call(_postUpdate)
+}
+
+function* _postUpdate() {
+  const state = yield select()
+  const update = {
+    type: 'CRYSTAL_UPDATED',
+    payload: {
+      base: state.crystal.base
+    }
+  }
+  state.renderer.socket.emit('message', update)
 }
 
 export default { _initialize, evaluate, setBase }

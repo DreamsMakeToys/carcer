@@ -70,7 +70,7 @@ const applyBehavior = Comp => {
       process.stdout.on('resize', this.setSize)
     }
 
-    render({ status }, { size, value }) {
+    render({ status, carcerState }, { size, value }) {
       const inputWidth = size.width - 21 - 1
 
       return (
