@@ -6,9 +6,10 @@ class Bridge {
   let socket: SocketIOClient
   
   init() {
+    let address = "http://localhost:3000"
     manager = SocketManager(
-      socketURL: URL(string: "http://localhost:3000")!,
-      config: [.compress])
+      socketURL: URL(string: address)!,
+      config: [.log(true), .compress])
     socket = manager.defaultSocket
     socket.on(clientEvent: .connect) { _, _ in
       let connectedMessage: SocketData = [

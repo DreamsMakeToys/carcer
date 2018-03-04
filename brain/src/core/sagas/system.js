@@ -1,12 +1,40 @@
-import { put } from 'redux-saga/effects'
+import { mapObjIndexed } from 'ramda'
+import { put, all, call, spawn } from 'redux-saga/effects'
 import { Action } from '../constants'
+import Service from '../services/service'
 
 function* _initialize(api) {
   delete api._initialize
   yield put({
-    type: Action.SYSTEM_LOADED,
+    type: Action.SYSTEM_LOADING,
     payload: api
   })
+  const config = yield call(Service.fetchConfig)
+  const spawnServices = mapObjIndexed(_toServiceEffect, config)
+  yield all(spawnServices)
+  yield put({ type: Action.SYSTEM_LOADED })
+}
+
+function _toServiceEffect(config, key) {
+  return spawn(_service, {
+    name: key,
+    ...config
+  })
+}
+
+function* _service(config) {
+  const { socket, channel } = yield call(Service.createServerOn, config.port)
+  yield put({
+    type: Action.SERVICE_LOADED,
+    payload: {
+      name: config.name,
+      socket
+    }
+  })
+  while (true) {
+    const message = take(channel)
+    console.log(message)
+  }
 }
 
 export default { _initialize }

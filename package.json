@@ -1,0 +1,7 @@
+{
+  "name": "carcer",
+  "scripts": {
+    "build": "cd brain && yarn build",
+    "start": "cd example && node ../brain/dist/carcer.js"
+  }
+}
