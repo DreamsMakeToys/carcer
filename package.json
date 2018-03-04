@@ -1,4 +1,0 @@
-{
-  "private": true,
-  "packages": ["packages/renderer", "packages/vehicle"]
-}

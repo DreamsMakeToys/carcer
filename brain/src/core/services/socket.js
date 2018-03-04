@@ -1,7 +1,7 @@
 import createServer from 'socket.io'
 import { eventChannel } from 'redux-saga'
 
-function initialize() {
+function createServerOn(port) {
   return new Promise(resolve => {
     const server = createServer()
     server.on('connection', socket => {
@@ -11,7 +11,7 @@ function initialize() {
       })
       resolve({ socket, channel })
     })
-    server.listen(3000)
+    server.listen(port)
   })
 }
 

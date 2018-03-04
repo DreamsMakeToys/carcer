@@ -22,6 +22,6 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "node dist/bundle.js"
+    "start": "node dist/carcer.js"
   }
 }
