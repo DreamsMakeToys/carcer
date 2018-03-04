@@ -1,4 +1,4 @@
 {
   "private": true,
-  "packages": ["packages/renderer", "packages/client"]
+  "packages": ["packages/renderer", "packages/vehicle"]
 }

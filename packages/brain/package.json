@@ -1,5 +1,5 @@
 {
-  "name": "carcer-shell",
+  "name": "carcer-brain",
   "version": "0.1.0",
   "main": "src/index.js",
   "license": "MIT",
@@ -9,6 +9,7 @@
     "ramda": "^0.25.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
+    "socket.io": "^2.0.4",
     "window-size": "^1.1.0"
   },
   "devDependencies": {
@@ -16,12 +17,11 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "nodemon": "^1.15.1",
     "webpack": "^3.11.0",
     "webpack-node-externals": "^1.6.0"
   },
   "scripts": {
     "build": "webpack",
-    "dev": "webpack --watch & nodemon dist/bundle.js"
+    "start": "node dist/bundle.js"
   }
 }

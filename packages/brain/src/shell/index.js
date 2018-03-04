@@ -14,8 +14,8 @@ const Shell = ({
   <div>
     <Text>
       {'╭──────────────────╮ '}
-      <Text bold>{status.severity}: </Text>
-      <Text>{status.message}</Text>
+      <Text bold>Carcer: </Text>
+      <Text>a toy for projection</Text>
     </Text>
     <div />
 
@@ -45,7 +45,6 @@ const Shell = ({
 )
 
 const select = state => ({
-  status: state.crystal.status,
   evaluateCommand: state.api.evaluate
 })
 
