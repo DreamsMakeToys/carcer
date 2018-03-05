@@ -1,5 +1,6 @@
 import Fs from 'fs'
 import Yaml from 'js-yaml'
+import Child from 'child_process'
 import createServer from 'socket.io'
 import { eventChannel } from 'redux-saga'
 
@@ -11,6 +12,13 @@ function fetchConfig() {
       const config = Yaml.safeLoad(data)
       resolve(config)
     })
+  })
+}
+
+function launch(script) {
+  return new Promise(resolve => {
+    const serviceProcess = Child.exec(script)
+    resolve(serviceProcess)
   })
 }
 
@@ -28,4 +36,4 @@ function createServerOn(port) {
   })
 }
 
-export default { fetchConfig, createServerOn }
+export default { fetchConfig, launch, createServerOn }

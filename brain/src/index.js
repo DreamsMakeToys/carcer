@@ -9,7 +9,7 @@ const renderApp = store => {
       <Shell />
     </Provider>
   )
-  // console.clear()
+  console.clear()
   render(app)
 }
 

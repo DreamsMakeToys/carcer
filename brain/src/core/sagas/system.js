@@ -23,6 +23,7 @@ function _toServiceEffect(config, key) {
 }
 
 function* _service(config) {
+  const serviceProcess = yield call(Service.launch, config.script)
   const { socket, channel } = yield call(Service.createServerOn, config.port)
   yield put({
     type: Action.SERVICE_LOADED,

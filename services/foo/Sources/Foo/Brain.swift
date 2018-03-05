@@ -5,7 +5,7 @@ class Brain {
   let manager: SocketManager
   let socket: SocketIOClient
   
-  init(port: Int) {
+  init(port: String) {
     let address = "http://localhost:\(port)"
     manager = SocketManager(
       socketURL: URL(string: address)!,
