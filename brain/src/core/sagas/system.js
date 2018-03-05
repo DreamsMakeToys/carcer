@@ -1,5 +1,5 @@
 import { mapObjIndexed } from 'ramda'
-import { put, all, call, spawn } from 'redux-saga/effects'
+import { put, all, call, fork, spawn, take } from 'redux-saga/effects'
 import { Action } from '../constants'
 import Service from '../services/service'
 
@@ -31,8 +31,12 @@ function* _service(config) {
       socket
     }
   })
+  yield fork(_handleMessage, channel)
+}
+
+function* _handleMessage(channel) {
   while (true) {
-    const message = take(channel)
+    const message = yield take(channel)
     console.log(message)
   }
 }

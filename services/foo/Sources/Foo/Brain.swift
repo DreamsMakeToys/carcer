@@ -1,30 +1,25 @@
 import Foundation
 import SocketIO
 
-class Bridge {
+class Brain {
   let manager: SocketManager
   let socket: SocketIOClient
   
-  init() {
-    let address = "http://localhost:3000"
+  init(port: Int) {
+    let address = "http://localhost:\(port)"
     manager = SocketManager(
       socketURL: URL(string: address)!,
       config: [.log(true), .compress])
     socket = manager.defaultSocket
     socket.on(clientEvent: .connect) { _, _ in
       let connectedMessage: SocketData = [
-        "type": "CONNECTED",
+        "type": "FOO_CONNECTED",
         "payload": [String: String]()
       ]
       self.socket.emit("message", connectedMessage)
     }
     socket.on("message") { data, _ in
-      let message = data[0] as! [String: Any]
-      let messageType = message["type"] as! String      
-      switch (messageType) {
-        default:
-          print("Unrecognized message received from brain")
-      }
+      print(data[0])
     }
     socket.connect()
   }
