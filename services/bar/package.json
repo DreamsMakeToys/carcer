@@ -1,0 +1,13 @@
+{
+  "name": "bar",
+  "version": "0.1.0",
+  "description": "an example node service designed for consumption by carcer",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "grpc": "^1.9.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

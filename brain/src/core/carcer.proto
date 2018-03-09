@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package carcer_proto;
+
+service Carcer {
+  rpc connect (BrainRequest) returns (ServiceReply) {}
+  rpc createChannel (stream BrainMessage) returns (stream ServiceMessage) {}
+}
+
+message BrainRequest {}
+
+message ServiceReply {}
+
+message BrainMessage {
+  string value = 1;
+}
+
+message ServiceMessage {
+  string value = 1;
+}

@@ -1,3 +1,0 @@
-foo:
-  script: 'cd ../services/foo && swift run Foo 3000'
-  port: 3000

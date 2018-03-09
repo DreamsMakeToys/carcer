@@ -1,0 +1,3 @@
+bar:
+  script: 'docker run -p 3000:3000 geraldo/bar'
+  port: 3000

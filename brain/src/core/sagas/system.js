@@ -2,6 +2,7 @@ import { mapObjIndexed } from 'ramda'
 import { put, all, call, fork, spawn, take } from 'redux-saga/effects'
 import { Action } from '../constants'
 import Service from '../services/service'
+import Storage from '../services/storage'
 
 function* _initialize(api) {
   delete api._initialize
@@ -9,7 +10,7 @@ function* _initialize(api) {
     type: Action.SYSTEM_LOADING,
     payload: api
   })
-  const config = yield call(Service.fetchConfig)
+  const config = yield call(Storage.fetchConfig)
   const spawnServices = mapObjIndexed(_toServiceEffect, config)
   yield all(spawnServices)
   yield put({ type: Action.SYSTEM_LOADED })
@@ -23,8 +24,7 @@ function _toServiceEffect(config, key) {
 }
 
 function* _service(config) {
-  const serviceProcess = yield call(Service.launch, config.script)
-  const { socket, channel } = yield call(Service.createServerOn, config.port)
+  const { socket, channel } = yield call(Service.initializeWith, config)
   yield put({
     type: Action.SERVICE_LOADED,
     payload: {
