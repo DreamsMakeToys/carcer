@@ -25,8 +25,9 @@
     "webpack-node-externals": "^1.6.0"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "yarn gen-proto && webpack",
     "start": "node dist/carcer.js",
-    "gen-proto": "cd ./src/core && grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./ --grpc_out=./ --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` ./carcer.proto"
+    "gen-proto":
+      "cd ./src/core/protos && grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./ --grpc_out=./ --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` ./carcer.proto"
   }
 }

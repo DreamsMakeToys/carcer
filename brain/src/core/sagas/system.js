@@ -24,11 +24,15 @@ function _toServiceEffect(config, key) {
 }
 
 function* _service(config) {
-  const { socket, channel } = yield call(Service.initializeWith, config)
+  const { settings, socket, channel } = yield call(
+    Service.initializeWith,
+    config
+  )
   yield put({
     type: Action.SERVICE_LOADED,
     payload: {
       name: config.name,
+      settings,
       socket
     }
   })

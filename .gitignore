@@ -45,3 +45,4 @@ Package.resolved
 node_modules
 dist
 yarn-error.log
+*_pb.js
