@@ -10,16 +10,15 @@ service Carcer {
 message BrainRequest {}
 
 message ServiceResponse {
-  string name = 1;
   map<string, CommandDescription> palette = 2;
 }
 
 message CommandDescription {
-  map<string, InputType> fields = 1;
+  map<string, InputType> fields = 2;
 }
 
 message BrainMessage {
-  Command payload = 2;
+  Command command = 2;
 }
 
 message ServiceMessage {
@@ -28,7 +27,7 @@ message ServiceMessage {
 
 message Command {
   string name = 1;
-  map<string, Field> fields = 2;
+  map<string, Field> payload = 2;
 }
 
 message Field {

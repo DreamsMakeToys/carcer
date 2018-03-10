@@ -1,5 +1,6 @@
 import Child from 'child_process'
 import Grpc from 'grpc'
+import { map } from 'ramda'
 import { eventChannel } from 'redux-saga'
 
 function initializeWith(config) {
@@ -15,7 +16,8 @@ function initializeWith(config) {
     deadline.setSeconds(deadline.getSeconds() + 5)
     service.waitForReady(deadline, serviceError => {
       service.setup(new BrainRequest(), (requestError, response) => {
-        const { palette } = response
+        const insertTarget = _insert.bind(null, config.name)
+        const palette = map(insertTarget, response.palette)
         const socket = service.createSocket()
         const channel = eventChannel(emit => {
           socket.on('data', message => emit(message))
@@ -25,6 +27,10 @@ function initializeWith(config) {
       })
     })
   })
+}
+
+function _insert(target, command) {
+  return { target, ...command }
 }
 
 export default { initializeWith }

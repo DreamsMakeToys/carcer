@@ -1,5 +1,4 @@
 import { h, Text, Component } from 'ink'
-import { setInterval } from 'timers'
 
 const CURSOR = '⏣'
 

@@ -12,7 +12,6 @@ function runServer() {
   function setup(call, respond) {
     const { InputType } = carcer_proto
     const response = {
-      name: 'Bar',
       palette: {
         hello: {
           fields: {
@@ -25,7 +24,9 @@ function runServer() {
   }
 
   function createSocket(socket) {
-    socket.on('data', message => console.log(message))
+    socket.on('data', message =>
+      console.log(JSON.stringify(message.command, null, 2))
+    )
     socket.on('end', () => console.log('END'))
   }
 }
