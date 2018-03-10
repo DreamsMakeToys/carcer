@@ -4,7 +4,6 @@
   "main": "src/index.js",
   "license": "MIT",
   "dependencies": {
-    "google-protobuf": "^3.5.0",
     "grpc": "^1.9.1",
     "ink": "^0.4.1",
     "ink-redux": "^1.0.0",
@@ -20,14 +19,13 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "copy-webpack-plugin": "^4.5.1",
     "grpc-tools": "^1.6.6",
     "webpack": "^3.11.0",
     "webpack-node-externals": "^1.6.0"
   },
   "scripts": {
-    "build": "yarn gen-proto && webpack",
-    "start": "node dist/carcer.js",
-    "gen-proto":
-      "cd ./src/core/protos && grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./ --grpc_out=./ --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` ./carcer.proto"
+    "build": "webpack",
+    "start": "node dist/carcer.js"
   }
 }

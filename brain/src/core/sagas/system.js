@@ -24,7 +24,7 @@ function _toServiceEffect(config, key) {
 }
 
 function* _service(config) {
-  const { settings, socket, channel } = yield call(
+  const { palette, socket, channel } = yield call(
     Service.initializeWith,
     config
   )
@@ -32,7 +32,7 @@ function* _service(config) {
     type: Action.SERVICE_LOADED,
     payload: {
       name: config.name,
-      settings,
+      palette,
       socket
     }
   })

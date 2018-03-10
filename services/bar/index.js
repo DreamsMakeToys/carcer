@@ -8,19 +8,26 @@ function runServer() {
   server.addService(Carcer.service, { setup, createSocket })
   server.bind(`0.0.0.0:${3000}`, ServerCredentials.createInsecure())
   server.start()
-}
 
-function setup(call, respond) {
-  console.log('setup')
-  respond(null, { name: 'Bar' })
-}
+  function setup(call, respond) {
+    const { InputType } = carcer_proto
+    const response = {
+      name: 'Bar',
+      palette: {
+        hello: {
+          fields: {
+            name: InputType.STRING
+          }
+        }
+      }
+    }
+    respond(null, response)
+  }
 
-function createSocket(socket) {
-  socket.on('data', message => {
-    socket.write({ value: 'SERVER' })
-    console.log(`Server <= ${message.value}`)
-  })
-  socket.on('end', () => console.log('END'))
+  function createSocket(socket) {
+    socket.on('data', message => console.log(message))
+    socket.on('end', () => console.log('END'))
+  }
 }
 
 runServer()

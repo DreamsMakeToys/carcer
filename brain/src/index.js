@@ -4,6 +4,9 @@ import createCore from './core'
 import Shell from './shell'
 
 const renderApp = store => {
+  store.subscribe(() => {
+    console.log(JSON.stringify(store.getState(), null, 2))
+  })
   const app = (
     <Provider store={store}>
       <Shell />

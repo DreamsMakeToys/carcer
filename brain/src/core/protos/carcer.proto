@@ -11,7 +11,11 @@ message BrainRequest {}
 
 message ServiceResponse {
   string name = 1;
-  repeated CommandDescription command = 2;
+  map<string, CommandDescription> palette = 2;
+}
+
+message CommandDescription {
+  map<string, InputType> fields = 1;
 }
 
 message BrainMessage {
@@ -24,25 +28,14 @@ message ServiceMessage {
 
 message Command {
   string name = 1;
-  repeated Field field = 2;
+  map<string, Field> fields = 2;
 }
 
 message Field {
-  string name = 1;
-  string value = 2;
-  InputType type = 3;
+  string value = 1;
+  InputType type = 2;
 }
 
 enum InputType {
   STRING = 0;
-}
-
-message CommandDescription {
-  string name = 1;
-  repeated FieldDescription field = 2; 
-}
-
-message FieldDescription {
-  string name = 1;
-  InputType type = 2;
 }

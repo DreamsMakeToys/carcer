@@ -1,4 +1,5 @@
 const Path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
@@ -19,5 +20,13 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: './src/core/protos/carcer.proto',
+        to: Path.resolve(__dirname, 'dist/carcer.proto')
+      }
+    ])
+  ],
   externals: [nodeExternals()]
 }
