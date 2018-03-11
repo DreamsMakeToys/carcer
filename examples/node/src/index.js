@@ -1,12 +1,11 @@
 const { load, Server, ServerCredentials } = require('grpc')
 
-function runServer() {
-  console.log('Bar')
+function runServerOn(port) {
   const server = new Server()
   const { carcer_proto } = load('./carcer.proto')
   const { Carcer } = carcer_proto
   server.addService(Carcer.service, { setup, createSocket })
-  server.bind(`0.0.0.0:${3000}`, ServerCredentials.createInsecure())
+  server.bind(`0.0.0.0:${port}`, ServerCredentials.createInsecure())
   server.start()
 
   function setup(call, respond) {
@@ -24,11 +23,12 @@ function runServer() {
   }
 
   function createSocket(socket) {
-    socket.on('data', message =>
+    socket.on('data', message => {
       console.log(JSON.stringify(message.command, null, 2))
-    )
+    })
     socket.on('end', () => console.log('END'))
   }
 }
 
-runServer()
+const servicePort = process.argv[2]
+runServerOn(servicePort)

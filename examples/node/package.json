@@ -1,0 +1,16 @@
+{
+  "name": "node-docker",
+  "version": "0.1.0",
+  "description": "an example service implemented with node",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "grpc": "^1.9.1"
+  },
+  "scripts": {
+    "build-docker": "docker build -t carcer/bar .",
+    "start": "cd ./werk && node ../../../brain/dist/carcer.js",
+    "start-docker": "cd ./docker-werk && node ../../../brain/dist/carcer.js",
+    "start-service": "cd ./src && node index.js"
+  }
+}

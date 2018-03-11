@@ -1,7 +1,11 @@
 {
   "name": "carcer",
   "scripts": {
-    "build": "cd brain && yarn build",
-    "start": "cd demo && node ../brain/dist/carcer.js"
+    "build-brain": "cd brain && yarn build",
+    "build-cocoa": "cd examples/cocoa && yarn build",
+    "build-docker-node": "cd examples/node && yarn build-docker",
+    "run-cocoa": "cd examples/cocoa && yarn start",
+    "run-node": "cd examples/node && yarn start",
+    "run-docker-node": "cd examples/node && yarn start-docker"
   }
 }
