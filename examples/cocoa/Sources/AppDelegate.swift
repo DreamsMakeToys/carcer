@@ -1,7 +1,7 @@
 import Cocoa
 
-let servicePort = CommandLine.arguments[1]
+let port = Int(CommandLine.arguments[1])!
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-  let server = Server(port: servicePort)
+  let service = Service(on: port)
 }

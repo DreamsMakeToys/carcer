@@ -1,15 +1,15 @@
 import Foundation
 import Dispatch
 
-class Server {
-  let _server: Carcer_Proto_CarcerServer
+class Service {
+  let server: Carcer_Proto_CarcerServer
   
-  init(port: Int) {
+  init(on port: Int) {
     let provider = CarcerProvider()
-    self._server = Carcer_Proto_CarcerServer(
+    server = Carcer_Proto_CarcerServer(
       address: "0.0.0.0:\(port)",
       provider: provider)
-    self._server.start()
+    server.start()
   }
 }
 
