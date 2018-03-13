@@ -4,8 +4,8 @@
     "build-brain": "cd brain && yarn build",
     "build-cocoa": "cd examples/cocoa && yarn build",
     "build-docker-node": "cd examples/node && yarn build-docker",
-    "run-cocoa": "cd examples/cocoa && yarn start",
-    "run-node": "cd examples/node && yarn start",
-    "run-docker-node": "cd examples/node && yarn start-docker"
+    "start-cocoa": "cd examples/cocoa && yarn start",
+    "start-node": "cd examples/node && yarn start",
+    "start-docker-node": "cd examples/node && yarn start-docker"
   }
 }

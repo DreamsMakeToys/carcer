@@ -1,3 +1,3 @@
 foo:
   port: 3000
-  script: 'docker run -p 3000:3000 carcer/bar'
+  script: 'docker run -p 3000:3000 carcer/node'

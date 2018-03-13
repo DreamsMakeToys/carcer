@@ -1,4 +1,5 @@
 const { load, Server, ServerCredentials } = require('grpc')
+const palette = require('./palette')
 
 function runServerOn(port) {
   const server = new Server()
@@ -7,28 +8,19 @@ function runServerOn(port) {
   server.addService(Carcer.service, { setup, createSocket })
   server.bind(`0.0.0.0:${port}`, ServerCredentials.createInsecure())
   server.start()
-
-  function setup(call, respond) {
-    const { InputType } = carcer_proto
-    const response = {
-      palette: {
-        hello: {
-          fields: {
-            name: InputType.STRING
-          }
-        }
-      }
-    }
-    respond(null, response)
-  }
-
-  function createSocket(socket) {
-    socket.on('data', message => {
-      console.log(JSON.stringify(message.command, null, 2))
-    })
-    socket.on('end', () => console.log('END'))
-  }
 }
 
-const servicePort = process.argv[2]
-runServerOn(servicePort)
+function setup(call, respond) {
+  const response = { palette }
+  respond(null, response)
+}
+
+function createSocket(socket) {
+  socket.on('data', message => {
+    console.log(JSON.stringify(message.command, null, 2))
+  })
+  socket.on('end', () => console.log('END'))
+}
+
+const port = process.argv[2]
+runServerOn(port)
