@@ -1,6 +1,6 @@
 import { h, render } from 'ink'
 import { Provider } from 'ink-redux'
-import createCore from './core'
+import createCore from 'carcer-core'
 import Shell from './shell'
 
 const renderApp = store => {

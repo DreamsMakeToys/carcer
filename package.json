@@ -1,5 +1,7 @@
 {
+  "private": true,
   "name": "carcer",
+  "workspaces": ["packages/core", "packages/shell"],
   "scripts": {
     "build-brain": "cd brain && yarn build",
     "build-cocoa": "cd examples/cocoa && yarn build",

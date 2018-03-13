@@ -18,13 +18,11 @@ const Shell = ({
       <Text>a toy for projection</Text>
     </Text>
     <div />
-
     <Text>
       {'│││││ 〉 ⏣  〈 │││││'}
       {'╭' + '─'.repeat(inputWidth) + '╮'}
     </Text>
     <div />
-
     <Text>
       {'││╭∩╮（︶︿︶）╭∩╮││'}
       {'│ '}
@@ -36,7 +34,6 @@ const Shell = ({
       {' '.repeat(inputWidth - value.length - 2) + '│'}
     </Text>
     <div />
-
     <Text>
       {'╰──────────────────╯'}
       {'╰' + '─'.repeat(inputWidth) + '╯'}
@@ -52,26 +49,20 @@ const applyBehavior = Comp => {
   class Instance extends Component {
     constructor(props) {
       super(props)
-
       const { width, height } = WindowSize.get()
-
       this.state = {
         size: { width, height },
         value: ''
       }
-
       this.setSize = this.setSize.bind(this)
       this.handleInput = this.handleInput.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
-
     componentDidMount() {
       process.stdout.on('resize', this.setSize)
     }
-
     render({ status, carcerState }, { size, value }) {
       const inputWidth = size.width - 21 - 1
-
       return (
         <Comp
           status={status}
@@ -82,28 +73,22 @@ const applyBehavior = Comp => {
         />
       )
     }
-
     setSize() {
       const { width, height } = WindowSize.get()
       const size = { width, height }
-
       console.clear()
       this.setState({ size })
     }
-
     handleInput(value) {
       this.setState({ value })
     }
-
     handleSubmit(value) {
       const { evaluateCommand } = this.props
-
       evaluateCommand(value).then(() => {
         this.setState({ value: '' })
       })
     }
   }
-
   return connect(select)(Instance)
 }
 
