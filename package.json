@@ -3,11 +3,18 @@
   "name": "carcer",
   "workspaces": ["packages/core", "packages/shell"],
   "scripts": {
-    "build-brain": "cd brain && yarn build",
-    "build-cocoa": "cd examples/cocoa && yarn build",
-    "build-docker-node": "cd examples/node && yarn build-docker",
-    "start-cocoa": "cd examples/cocoa && yarn start",
-    "start-node": "cd examples/node && yarn start",
-    "start-docker-node": "cd examples/node && yarn start-docker"
+    "build": "webpack",
+    "build-docker-node": "cd example && yarn build-docker",
+    "start-node": "cd example && yarn start",
+    "start-docker-node": "cd example && yarn start-docker"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "copy-webpack-plugin": "^4.5.1",
+    "webpack": "^3.11.0",
+    "webpack-node-externals": "^1.6.0"
   }
 }

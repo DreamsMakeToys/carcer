@@ -6,7 +6,7 @@ import { eventChannel } from 'redux-saga'
 function initializeWith(config) {
   return new Promise(resolve => {
     const serviceProcess = Child.exec(config.script)
-    const { carcer_proto } = Grpc.load('../../../brain/dist/carcer.proto') // TODO HACK
+    const { carcer_proto } = Grpc.load('../../dist/carcer.proto') // TODO REMOVE HACK
     const { Carcer, BrainRequest } = carcer_proto
     const service = new Carcer(
       `localhost:${config.port}`,

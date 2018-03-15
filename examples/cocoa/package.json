@@ -1,8 +1,0 @@
-{
-  "name": "cocoa",
-  "version": "0.1.0",
-  "description": "an example service implemented with cocoa",
-  "scripts": {
-    "start": "cd ./werk && node ../../../brain/dist/carcer.js"
-  }
-}

@@ -1,6 +1,6 @@
 import { h, render } from 'ink'
 import { Provider } from 'ink-redux'
-import createCore from 'carcer-core'
+import createCore from '../../core/src/index.js' // TODO REMOVE HACK
 import Shell from './shell'
 
 const renderApp = store => {

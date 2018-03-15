@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './packages/shell/src/index.js',
   output: {
     filename: 'carcer.js',
     path: Path.resolve(__dirname, 'dist')
@@ -23,7 +23,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: './src/core/protos/carcer.proto',
+        from: 'packages/core/src/protos/carcer.proto',
         to: Path.resolve(__dirname, 'dist/carcer.proto')
       }
     ])

@@ -1,3 +1,0 @@
-foo:
-  port: 8080
-  script: 'cd ../ && swift run Foo 8080'
