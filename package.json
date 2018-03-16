@@ -4,9 +4,9 @@
   "workspaces": ["packages/core", "packages/shell"],
   "scripts": {
     "build": "webpack",
-    "build-docker-node": "cd example && yarn build-docker",
-    "start-node": "cd example && yarn start",
-    "start-docker-node": "cd example && yarn start-docker"
+    "build-docker": "cd example && yarn build-docker",
+    "start": "cd example && yarn start",
+    "start-docker": "cd example && yarn start-docker"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
