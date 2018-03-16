@@ -1,19 +1,19 @@
 import { drop, reduce, split, trim } from 'ramda'
 
-function parse(command) {
-  command = trim(command)
-  const tokens = split(/\s+/, command)
-  const name = tokens[0]
+function parse(commandString) {
+  commandString = trim(commandString)
+  const tokens = split(/\s+/, commandString)
+  const command = tokens[0]
   const args = drop(1, tokens)
   const payload = reduce(_toPayload, {}, args)
-  return { name, payload }
+  return { command, payload }
 }
 
 function _toPayload(result, arg) {
   const tokens = split(/=/, arg)
-  const name = tokens[0]
+  const field = tokens[0]
   const value = tokens[1]
-  result[name] = { value }
+  result[field] = { value }
   return result
 }
 

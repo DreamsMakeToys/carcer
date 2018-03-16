@@ -1,5 +1,5 @@
 import { mapObjIndexed } from 'ramda'
-import { put, all, call, fork, spawn, take } from 'redux-saga/effects'
+import { put, all, call, spawn, take } from 'redux-saga/effects'
 import { Action } from '../constants'
 import Service from '../services/service'
 import Storage from '../services/storage'
@@ -24,26 +24,15 @@ function _toServiceEffect(config, key) {
 }
 
 function* _service(config) {
-  const { palette, socket, channel } = yield call(
-    Service.initializeWith,
-    config
-  )
+  const { service, palette } = yield call(Service.initializeWith, config)
   yield put({
     type: Action.SERVICE_LOADED,
     payload: {
       name: config.name,
-      palette,
-      socket
+      service,
+      palette
     }
   })
-  yield fork(_handleMessage, channel)
-}
-
-function* _handleMessage(channel) {
-  while (true) {
-    const message = yield take(channel)
-    console.log(message)
-  }
 }
 
 export default { _initialize }

@@ -1,17 +1,19 @@
 import { mapObjIndexed } from 'ramda'
 import { call, select } from 'redux-saga/effects'
 import { parse } from '../utils/command'
+import Service from '../services/service'
 
 function* evaluate(userInput) {
-  const command = yield call(parse, userInput)
-  const { fields, socket } = yield select(state => {
-    const { target, fields } = state.palette[command.name]
-    const { socket } = state.services[target]
-    return { fields, socket }
+  const request = yield call(parse, userInput)
+  const { fields, service } = yield select(state => {
+    const { target, fields } = state.palette[request.command]
+    const { service } = state.services[target]
+    return { fields, service }
   })
   const insertFieldType = _insertField.bind(null, fields)
-  command.payload = mapObjIndexed(insertFieldType, command.payload)
-  socket.write({ command })
+  request.payload = mapObjIndexed(insertFieldType, request.payload)
+  const { message } = yield call(Service.executeWith, service, request)
+  console.log(message)
 }
 
 function _insertField(types, field, fieldName) {

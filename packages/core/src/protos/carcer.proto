@@ -3,13 +3,13 @@ syntax = "proto3";
 package carcer_proto;
 
 service Carcer {
-  rpc setup(BrainRequest) returns (ServiceResponse) {}
-  rpc createSocket(stream BrainMessage) returns (stream ServiceMessage) {}
+  rpc setup(InitialRequest) returns (InitialResponse) {}
+  rpc execute(CommandRequest) returns (CommandResponse) {}
 }
 
-message BrainRequest {}
+message InitialRequest {}
 
-message ServiceResponse {
+message InitialResponse {
   map<string, CommandDescription> palette = 2;
 }
 
@@ -17,17 +17,13 @@ message CommandDescription {
   map<string, InputType> fields = 2;
 }
 
-message BrainMessage {
-  Command command = 2;
-}
-
-message ServiceMessage {
-  string value = 1;
-}
-
-message Command {
-  string name = 1;
+message CommandRequest {
+  string command = 1;
   map<string, Field> payload = 2;
+}
+
+message CommandResponse {
+  string message = 1;
 }
 
 message Field {

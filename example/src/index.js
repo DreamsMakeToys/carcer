@@ -5,7 +5,7 @@ function runServerOn(port) {
   const server = new Server()
   const { carcer_proto } = load('./carcer.proto')
   const { Carcer } = carcer_proto
-  server.addService(Carcer.service, { setup, createSocket })
+  server.addService(Carcer.service, { setup, execute })
   server.bind(`0.0.0.0:${port}`, ServerCredentials.createInsecure())
   server.start()
 }
@@ -15,11 +15,10 @@ function setup(call, respond) {
   respond(null, response)
 }
 
-function createSocket(socket) {
-  socket.on('data', message => {
-    console.log(JSON.stringify(message.command, null, 2))
-  })
-  socket.on('end', () => console.log('END'))
+function execute(call, respond) {
+  const message = JSON.stringify(call.request, null, 2)
+  const response = { message }
+  respond(null, response)
 }
 
 const port = process.argv[2]
