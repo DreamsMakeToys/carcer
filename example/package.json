@@ -1,0 +1,15 @@
+{
+  "name": "node",
+  "version": "0.1.0",
+  "description": "an example service implemented with node",
+  "main": "./src/index.js",
+  "dependencies": {
+    "grpc": "^1.9.1"
+  },
+  "scripts": {
+    "build-docker": "docker build -t carcer/node .",
+    "start": "cd ./werk && node ../../dist/carcer.js",
+    "start-docker": "cd ./werk-docker && node ../../dist/carcer.js",
+    "start-service": "cd ./src && node index.js"
+  }
+}
