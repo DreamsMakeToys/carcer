@@ -16,9 +16,17 @@ function setup(call, respond) {
 }
 
 function execute(call, respond) {
-  const message = JSON.stringify(call.request, null, 2)
-  const response = { message }
-  respond(null, response)
+  const { command, payload } = call.request
+  let message = undefined
+  switch (command) {
+    case 'hello':
+      const { first, last } = payload
+      message = `Hello, ${first ? first.value : ''} ${last ? last.value : ''}`
+      break
+    default:
+      message = 'Unknown command'
+  }
+  respond(null, { message })
 }
 
 const port = process.argv[2]

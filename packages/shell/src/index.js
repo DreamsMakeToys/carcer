@@ -4,15 +4,15 @@ import createCore from '../../core/src/index.js' // TODO REMOVE HACK
 import Shell from './shell'
 
 const renderApp = store => {
-  store.subscribe(() => {
-    console.log(JSON.stringify(store.getState(), null, 2))
-  })
+  // store.subscribe(() => {
+  //   console.log(JSON.stringify(store.getState(), null, 2))
+  // })
   const app = (
     <Provider store={store}>
       <Shell />
     </Provider>
   )
-  // console.clear()
+  console.clear()
   render(app)
 }
 

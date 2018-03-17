@@ -4,7 +4,7 @@ import WindowSize from 'window-size'
 import TextInput from './textinput'
 
 const Shell = ({
-  status,
+  prompt,
   inputWidth,
   value,
   size,
@@ -14,8 +14,8 @@ const Shell = ({
   <div>
     <Text>
       {'╭──────────────────╮ '}
-      <Text bold>Carcer: </Text>
-      <Text>a toy for projection</Text>
+      <Text bold>{prompt.title}: </Text>
+      <Text>{prompt.message}</Text>
     </Text>
     <div />
     <Text>
@@ -42,7 +42,8 @@ const Shell = ({
 )
 
 const select = state => ({
-  evaluateCommand: state.api.evaluate
+  evaluateCommand: state.api.evaluate,
+  status: state.session.status
 })
 
 const applyBehavior = Comp => {
@@ -62,10 +63,14 @@ const applyBehavior = Comp => {
       process.stdout.on('resize', this.setSize)
     }
     render({ status, carcerState }, { size, value }) {
+      const prompt = {
+        title: status ? status.target : 'Carcer',
+        message: status ? status.message : 'a toy for projection'
+      }
       const inputWidth = size.width - 21 - 1
       return (
         <Comp
-          status={status}
+          prompt={prompt}
           inputWidth={inputWidth}
           value={value}
           handleInput={this.handleInput}
