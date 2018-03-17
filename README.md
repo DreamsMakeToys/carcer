@@ -6,9 +6,11 @@ A toy for projection
 
 ### Running Example
 
-1.  `yarn install`
-2.  `yarn build`
-3.  `yarn start`
+1.  `git clone https://github.com/DreamsMakeToys/Carcer.git`
+2.  `cd ./carcer`
+3.  `yarn install`
+4.  `yarn build`
+5.  `yarn start`
 
 ### Considerations
 

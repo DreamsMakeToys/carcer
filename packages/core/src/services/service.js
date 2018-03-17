@@ -7,7 +7,7 @@ let Proto = null // TODO GENERATE STATICALLY
 function initializeWith(config) {
   return new Promise(resolve => {
     const serviceProcess = Child.exec(config.script)
-    const { carcer_proto } = Grpc.load('../../dist/carcer.proto') // TODO REMOVE HACK
+    const { carcer_proto } = Grpc.load('../../protos/carcer.proto') // TODO REMOVE HACK
     Proto = carcer_proto // TODO REMOVE HACK
     const service = new Proto.Carcer(
       `localhost:${config.port}`,

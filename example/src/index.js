@@ -3,7 +3,7 @@ const palette = require('./palette')
 
 function runServerOn(port) {
   const server = new Server()
-  const { carcer_proto } = load('./carcer.proto')
+  const { carcer_proto } = load('../../protos/carcer.proto')
   const { Carcer } = carcer_proto
   server.addService(Carcer.service, { setup, execute })
   server.bind(`0.0.0.0:${port}`, ServerCredentials.createInsecure())
