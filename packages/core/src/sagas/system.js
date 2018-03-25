@@ -1,7 +1,7 @@
-import { mapObjIndexed } from 'ramda'
-import { put, all, call, spawn, take } from 'redux-saga/effects'
+import Ramda, { mapObjIndexed } from 'ramda'
+import { put, all, call, take } from 'redux-saga/effects'
 import { Action } from '../constants'
-import Service from '../services/service'
+import Plugin from '../services/plugin'
 import Storage from '../services/storage'
 
 function* _initialize(api) {
@@ -11,26 +11,29 @@ function* _initialize(api) {
     payload: api
   })
   const config = yield call(Storage.fetchConfig)
-  const spawnServices = mapObjIndexed(_toServiceEffect, config)
-  yield all(spawnServices)
-  yield put({ type: Action.SYSTEM_LOADED }) // TODO WAIT FOR ALL SERVICES TO LOAD
+  const pluginsLoaded = mapObjIndexed(_loadPluginWith, config)
+  yield all(pluginsLoaded)
+  yield put({ type: Action.SYSTEM_LOADED })
 }
 
-function _toServiceEffect(config, key) {
-  return spawn(_service, {
+function _loadPluginWith(config, key) {
+  return call(_pluginWith, {
     name: key,
     ...config
   })
 }
 
-function* _service(config) {
-  const { service, palette } = yield call(Service.initializeWith, config)
+function* _pluginWith(config) {
+  const { service, reduce, palette } = yield call(Plugin.loadWith, config)
+  const state = reduce(undefined, { name: 'INIT_PLUGIN_STATE' })
   yield put({
-    type: Action.SERVICE_LOADED,
+    type: Action.PLUGIN_LOADED,
     payload: {
       name: config.name,
-      service,
-      palette
+      state,
+      reduce,
+      palette,
+      service
     }
   })
 }
