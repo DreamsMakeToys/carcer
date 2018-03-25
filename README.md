@@ -2,7 +2,7 @@
 
 ## Carcer
 
-A toy for projection
+A mechanism for projection
 
 ### Running Example
 

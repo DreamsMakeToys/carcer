@@ -5,8 +5,13 @@
   "dependencies": {
     "grpc": "^1.9.1",
     "js-yaml": "^3.10.0",
+    "protobufjs": "^6.8.6",
     "ramda": "^0.25.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0"
+  },
+  "scripts": {
+    "gen-json":
+      "pbjs -o ./src/protos/setup.proto.json -t json ./src/protos/carcer.proto"
   }
 }
