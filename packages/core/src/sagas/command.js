@@ -1,29 +1,36 @@
-import { mapObjIndexed } from 'ramda'
+import { merge } from 'ramda'
 import { call, put, select } from 'redux-saga/effects'
 import { Action } from '../constants'
-import { parse } from '../utils/command'
-import Service from '../services/service'
+import { parse, massage } from '../utils/command'
+import Plugin from '../services/plugin'
 
 function* evaluate(userInput) {
-  const request = yield call(parse, userInput)
-  const { target, fields, service } = yield select(state => {
-    const { target, fields } = state.palette[request.command]
-    const { service } = state.services[target]
-    return { target, fields, service }
+  const command = yield call(parse, userInput)
+  const { config, plugin } = yield select(reduxState => {
+    const config = reduxState.palette[command.name]
+    const plugin = reduxState.plugins[config.target]
+    return { config, plugin }
   })
-  const insertFieldType = _insertField.bind(null, fields)
-  request.payload = mapObjIndexed(insertFieldType, request.payload)
-  const { message } = yield call(Service.executeWith, service, request)
-  const status = { target, message }
+  command.payload = yield call(massage, command.payload, config.fields)
+  if (config.select) {
+    const selectedPayload = config.select(plugin.state)
+    command.payload = merge(command.payload, selectedPayload)
+  }
+  if (config.forward) {
+    const responsePayload = yield call(
+      Plugin.executeWith,
+      plugin.service,
+      command
+    )
+    command.payload = merge(command.payload, responsePayload)
+  }
+  const newState = plugin.reduce(plugin.state, command)
+  const message = `${command.name} has resolved`
+  const status = { target: plugin.name, message }
   yield put({
     type: Action.COMMAND_EXECUTED,
-    payload: { status }
+    payload: { status, plugin: plugin.name, state: newState }
   })
-}
-
-function _insertField(types, field, fieldName) {
-  const type = types[fieldName]
-  return { ...field, type }
 }
 
 export default { evaluate }

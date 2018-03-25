@@ -7,9 +7,13 @@ const initialState = () => ({
 export default (state = {}, action) => {
   switch (action.type) {
     case Action.COMMAND_EXECUTED:
-      const { status } = action.payload
-      return { ...state, status }
+      return handleCommandExecuted(state, action)
     default:
       return state
   }
+}
+
+function handleCommandExecuted(state, action) {
+  const { status } = action.payload
+  return { ...state, status }
 }
