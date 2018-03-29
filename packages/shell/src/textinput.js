@@ -2,13 +2,20 @@ import { h, Text, Component } from 'ink'
 
 const CURSOR = '⏣'
 
-const TextInput = ({ value }) => {
+const TextInput = ({ value, width }) => {
+  const massagedValue = massage(width, value)
   return (
     <span>
-      <Text dim>{value}</Text>
-      <Text>{CURSOR}</Text>
+      <Text dim>{massagedValue}</Text>
     </span>
   )
+}
+
+const massage = (width, value) => {
+  const valueLength = value.length
+  return valueLength >= width
+    ? '...' + value.slice(valueLength - width + 4) + CURSOR
+    : value + CURSOR + ' '.repeat(width - valueLength - 1)
 }
 
 const applyBehavior = Comp => {
@@ -23,25 +30,24 @@ const applyBehavior = Comp => {
     componentWillUnmount() {
       process.stdin.removeListener('keypress', this.handleKeyPress)
     }
-    render({ value }) {
-      return <Comp value={value} />
+    render({ width, value }) {
+      return <Comp width={width} value={value} />
     }
-    // Reference: https://github.com/vadimdemedes/ink-text-input/blob/master/src/index.js
     handleKeyPress(char, key) {
       const { value, handleInput, handleSubmit } = this.props
-      if (key.name === 'return') {
-        handleSubmit(value)
-        return
-      }
-      if (key.name === 'backspace') {
-        handleInput(value.slice(0, -1))
-        return
-      }
-      if (
-        key.name === 'space' ||
-        (key.sequence === char && /^.*$/.test(char) && !key.ctrl)
-      ) {
-        handleInput(value + char)
+      switch (key.name) {
+        case 'return':
+          handleSubmit(value)
+          return
+        case 'backspace':
+          const lastValue = value.slice(0, -1)
+          handleInput(lastValue)
+          return
+        case 'space':
+        default:
+          const newValue = value + char
+          handleInput(newValue)
+          return
       }
     }
   }
