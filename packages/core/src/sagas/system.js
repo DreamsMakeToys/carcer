@@ -11,9 +11,12 @@ function* _initialize(api) {
     payload: api
   })
   const config = yield call(Storage.fetchConfig)
-  const pluginsLoaded = mapObjIndexed(_loadPluginWith, config)
+  const pluginsLoaded = mapObjIndexed(_loadPluginWith, config.plugins)
   yield all(pluginsLoaded)
-  yield put({ type: Action.SYSTEM_LOADED })
+  yield put({
+    type: Action.SYSTEM_LOADED,
+    payload: { config }
+  })
 }
 
 function _loadPluginWith(config, key) {
