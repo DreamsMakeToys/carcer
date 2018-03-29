@@ -7,7 +7,7 @@ import SetupJSON from '../protos/setup.proto.json'
 
 function loadWith(config) {
   Child.exec(config.script)
-  return _setupWith(config).then(_updateWithService)
+  return _setupWith(config).then(_bindService)
 }
 
 function _setupWith(config) {
@@ -47,7 +47,7 @@ function _massage(target, command) {
   return { target, ...command }
 }
 
-function _updateWithService({ port, palette, reducer, serviceProto }) {
+function _bindService({ port, palette, reducer, serviceProto }) {
   return new Promise(resolve => {
     const { Carcer } = Grpc.loadObject(serviceProto).carcer
     const service = new Carcer(
