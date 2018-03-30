@@ -25,8 +25,11 @@ function _setupWith(config) {
       service.setup({}, (requestError, response) => {
         if (requestError) throw requestError
         service.close()
-        const massageWithTarget = _massage.bind(null, config.name)
-        const palette = map(massageWithTarget, response.palette)
+        const paletteBytes = Buffer.from(response.palette64, 'base64')
+        const paletteStr = paletteBytes.toString('ascii')
+        const barePalette = eval(paletteStr)()
+        const injectTarget = _inject.bind(null, config.name)
+        const palette = map(injectTarget, barePalette)
         const reducerBytes = Buffer.from(response.reducer64, 'base64')
         const reducerStr = reducerBytes.toString('ascii')
         const reducer = eval(reducerStr)({ Ramda }) // TODO ??? USE `new Function`
@@ -34,13 +37,13 @@ function _setupWith(config) {
         const serviceProtoStr = serviceProtoBytes.toString('ascii')
         const serviceProtoJSON = JSON.parse(serviceProtoStr)
         const serviceProto = Root.fromJSON(serviceProtoJSON)
-        resolve({ port: config.port, serviceProto, palette, reducer })
+        resolve({ port: config.port, palette, reducer, serviceProto })
       })
     })
   })
 }
 
-function _massage(target, command) {
+function _inject(target, command) {
   if (command.select) {
     command.select = eval(command.select)
   }

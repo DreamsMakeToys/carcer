@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = () => ({
   register: {
     fields: {
       first: 'STRING',
@@ -6,9 +6,10 @@ module.exports = {
     }
   },
   greet: {
-    select: `state => ({ 
-      first: state.first, 
-      last: state.last })`,
+    select: state => ({
+      first: state.first,
+      last: state.last
+    }),
     forward: true
   }
-}
+})
