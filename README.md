@@ -12,6 +12,11 @@ A mechanism for projection
 4.  `yarn build`
 5.  `yarn start`
 
+### Goals
+
+* **_generalize interaction_**
+* **_centralize complexity_**
+
 ### Forces
 
 * **_progress not perfection_**

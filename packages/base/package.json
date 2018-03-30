@@ -1,6 +1,6 @@
 {
-  "name": "carcer-core",
-  "version": "0.1.0",
+  "name": "carcer-base",
+  "version": "0.2.0",
   "module": "src/index.js",
   "dependencies": {
     "grpc": "^1.9.1",

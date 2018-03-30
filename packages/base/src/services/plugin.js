@@ -27,7 +27,7 @@ function _setupWith(config) {
         service.close()
         const paletteBytes = Buffer.from(response.palette64, 'base64')
         const paletteStr = paletteBytes.toString('ascii')
-        const barePalette = eval(paletteStr)()
+        const barePalette = eval(paletteStr)() // TODO ??? USE `new Function`
         const injectTarget = _inject.bind(null, config.name)
         const palette = map(injectTarget, barePalette)
         const reducerBytes = Buffer.from(response.reducer64, 'base64')
