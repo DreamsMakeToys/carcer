@@ -1,6 +1,6 @@
 FROM node:9
 
-WORKDIR /example
+WORKDIR /service
 
 COPY ./ ./
 COPY package*.json ./

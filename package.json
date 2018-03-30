@@ -2,13 +2,7 @@
   "private": true,
   "version": "0.1.0",
   "name": "carcer",
-  "workspaces": ["packages/core", "packages/shell"],
-  "scripts": {
-    "build": "webpack",
-    "build-docker": "cd example && yarn build-docker",
-    "start": "cd example && yarn start",
-    "start-docker": "cd example && yarn start-docker"
-  },
+  "workspaces": ["packages/core", "packages/shell", "example"],
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -16,5 +10,14 @@
     "babel-preset-stage-2": "^6.24.1",
     "webpack": "^3.11.0",
     "webpack-node-externals": "^1.6.0"
+  },
+  "scripts": {
+    "build": "yarn build-carcer && yarn build-example",
+    "build-carcer": "yarn gen-json && webpack",
+    "gen-json": "cd ./packages/core && yarn gen-json",
+    "build-example": "cd example && yarn build",
+    "build-docker": "cd example && yarn build-docker",
+    "start": "cd example && yarn start",
+    "start-docker": "cd example && yarn start-docker"
   }
 }

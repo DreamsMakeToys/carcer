@@ -4,7 +4,7 @@
 
 A mechanism for projection
 
-### Running Example
+### Getting Started
 
 1.  `git clone https://github.com/DreamsMakeToys/carcer.git`
 2.  `cd ./carcer`
