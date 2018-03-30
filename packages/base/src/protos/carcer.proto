@@ -1,0 +1,34 @@
+syntax = "proto3";
+package carcer;
+
+service Carcer {
+  rpc setup(InitialRequest) returns (InitialResponse);
+  rpc execute(CommandRequest) returns (CommandResponse);
+}
+
+message InitialRequest {
+  bool boolshit = 1; // TODO REMOVE HACK - Werkaround for loadObject boolshit in base
+}
+
+message InitialResponse {
+  string palette64 = 1;
+  string reducer64 = 2;
+  string protoJson64 = 3;  
+}
+
+message CommandRequest {
+  string name = 1;
+  RequestPayload payload = 2;
+}
+
+message RequestPayload {
+  // oneof request_payload {}
+}
+message CommandResponse {
+  ResponsePayload payload = 1;
+}
+
+message ResponsePayload {
+  // oneof response_payload {}
+}
+
