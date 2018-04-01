@@ -1,8 +1,9 @@
-import Ramda, { mapObjIndexed } from 'ramda'
+import { mapObjIndexed } from 'ramda'
 import { put, all, call, spawn } from 'redux-saga/effects'
 import { Action } from '../constants'
 import Plugin from '../services/plugin'
 import Storage from '../services/storage'
+import Client from '../services/client'
 import { _processUserInput } from './command'
 
 function* _initialize(api) {
@@ -15,6 +16,7 @@ function* _initialize(api) {
   const pluginsLoaded = mapObjIndexed(_loadPluginWith, config.plugins)
   yield all(pluginsLoaded)
   yield spawn(_processUserInput)
+  yield call(Client.listen)
   yield put({
     type: Action.SYSTEM_LOADED,
     payload: { config }
