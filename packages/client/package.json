@@ -1,0 +1,10 @@
+{
+  "name": "carcer-client",
+  "version": "0.2.0",
+  "main": "src/index.js",
+  "dependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "rmwc": "^1.4.1"
+  }
+}

@@ -46,3 +46,4 @@ node_modules
 dist
 yarn-error.log
 *.proto.json
+packages/base/assets

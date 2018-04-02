@@ -3,7 +3,7 @@ import Grpc from 'grpc'
 import { Root } from 'protobufjs'
 import Ramda, { map } from 'ramda'
 import { eventChannel } from 'redux-saga'
-import SetupJSON from '../protos/setup.proto.json'
+import SetupJSON from '../../assets/setup.proto.json'
 
 function loadWith(config) {
   Child.exec(config.script)

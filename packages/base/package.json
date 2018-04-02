@@ -13,6 +13,6 @@
   },
   "scripts": {
     "gen-json":
-      "pbjs -o ./src/protos/setup.proto.json -t json ./src/protos/carcer.proto"
+      "pbjs -o ./assets/setup.proto.json -t json ./src/protos/setup.proto"
   }
 }
