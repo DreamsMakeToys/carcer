@@ -2,7 +2,7 @@ const Path = require('path')
 const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
-  entry: './packages/shell/src/index.js',
+  entry: './packages/base-shell/src/index.js',
   output: {
     path: Path.resolve(__dirname, 'dist'),
     filename: 'carcer.js'

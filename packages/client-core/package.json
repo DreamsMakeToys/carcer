@@ -1,0 +1,6 @@
+{
+  "name": "client-core",
+  "version": "0.2.0",
+  "main": "src/index.js",
+  "dependencies": {}
+}

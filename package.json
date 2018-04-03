@@ -4,9 +4,11 @@
   "name": "carcer",
   "workspaces": [
     "example",
-    "packages/base",
-    "packages/client",
-    "packages/shell"
+    "packages/base-core",
+    "packages/base-shell",
+    "packages/client-core",
+    "packages/client-shell",
+    "packages/create-core"
   ],
   "devDependencies": {
     "autoprefixer": "^8.2.0",
@@ -28,7 +30,7 @@
   "scripts": {
     "build": "yarn build-carcer && yarn build-example",
     "build-carcer": "yarn build-client && yarn build-base",
-    "gen-json": "cd ./packages/base && yarn gen-json",
+    "gen-json": "cd ./packages/base-core && yarn gen-json",
     "build-client": "webpack --config client.config.js",
     "build-base": "yarn gen-json && webpack --config base.config.js",
     "build-example": "cd example && yarn build",

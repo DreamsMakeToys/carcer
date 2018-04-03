@@ -3,10 +3,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const createFlexbugFixes = require('postcss-flexbugs-fixes')
 const createAutoprefixer = require('autoprefixer')
 
-const ASSETS_PATH = Path.resolve(__dirname, './packages/base/assets')
+const ASSETS_PATH = Path.resolve(__dirname, './packages/base-core/assets')
 
 module.exports = {
-  entry: './packages/client/src/index.js',
+  entry: './packages/client-shell/src/index.js',
   output: {
     path: ASSETS_PATH,
     filename: 'client.js'
@@ -65,7 +65,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: './packages/client/src/index.html',
+        from: './packages/client-shell/src/index.html',
         to: ASSETS_PATH,
         toType: 'dir'
       }

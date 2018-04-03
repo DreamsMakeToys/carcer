@@ -1,12 +1,11 @@
 import { mergeAll, map } from 'ramda'
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import reducer from './reducers'
-import sagas from './sagas'
 
-const createCore = () => {
+const createCore = (reducer, sagas) => {
   const sagaMiddleware = createSagaMiddleware()
-  const store = createStore(reducer, applyMiddleware(sagaMiddleware))
+  const reduxMiddleware = applyMiddleware(sagaMiddleware)
+  const store = createStore(reducer, reduxMiddleware)
   const api = createApi(sagaMiddleware.run, sagas)
   return api._initialize(api).then(() => store)
 }
