@@ -1,17 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Toolbar, ToolbarRow, ToolbarTitle } from 'rmwc'
+import { Provider } from 'react-redux'
+import createClientCore from '../../client-core/src/index.js' // TODO REMOVE HACK => "client-core"
+import Shell from './crystals/shell'
 import './global.css'
 
-const root = document.createElement('div')
-document.body.appendChild(root)
-ReactDOM.render(
-  <div className="mdc-typography">
-    <Toolbar>
-      <ToolbarRow>
-        <ToolbarTitle>Carcer</ToolbarTitle>
-      </ToolbarRow>
-    </Toolbar>
-  </div>,
-  root
-)
+createClientCore().then(renderClient)
+
+function renderClient(store) {
+  const clientElement = (
+    <Provider store={store}>
+      <Shell />
+    </Provider>
+  )
+  const rootContainer = document.createElement('div')
+  document.body.appendChild(rootContainer)
+  ReactDOM.render(clientElement, rootContainer)
+}

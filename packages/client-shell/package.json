@@ -3,8 +3,11 @@
   "version": "0.2.0",
   "main": "src/index.js",
   "dependencies": {
+    "ramda": "^0.25.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
     "rmwc": "^1.4.1"
   }
 }

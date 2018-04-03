@@ -2,20 +2,12 @@
   "private": true,
   "version": "0.2.0",
   "name": "carcer",
-  "workspaces": [
-    "example",
-    "packages/base-core",
-    "packages/base-shell",
-    "packages/client-core",
-    "packages/client-shell",
-    "packages/create-core"
-  ],
+  "workspaces": ["example", "packages/*"],
   "devDependencies": {
     "autoprefixer": "^8.2.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",

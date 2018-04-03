@@ -1,7 +1,7 @@
 {
   "name": "create-core",
   "version": "0.2.0",
-  "main": "src/index.js",
+  "module": "src/index.js",
   "dependencies": {
     "ramda": "^0.25.0",
     "redux": "^3.7.2",
