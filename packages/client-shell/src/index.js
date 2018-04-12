@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import createClientCore from '../../client-core/src/index.js' // TODO REMOVE HACK => "client-core"
-import Shell from './crystals/shell'
-import './global.css'
+import createClientCore from 'client-core'
+import Shell from './shell'
 
 createClientCore().then(renderClient)
 
 function renderClient(store) {
+  window.store = store // REMOVE
   const clientElement = (
     <Provider store={store}>
       <Shell />

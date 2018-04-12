@@ -1,4 +1,4 @@
-import createCore from '../../create-core/src/index.js' // TODO REMOVE HACK => "create-core"
+import createCore from 'create-core'
 import reducer from './reducers'
 import sagas from './sagas'
 

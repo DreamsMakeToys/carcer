@@ -1,33 +1,36 @@
 {
-  "private": true,
-  "version": "0.2.0",
   "name": "carcer",
-  "workspaces": ["example", "packages/*"],
-  "devDependencies": {
-    "autoprefixer": "^8.2.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "copy-webpack-plugin": "^4.5.1",
-    "css-loader": "^0.28.11",
-    "postcss-flexbugs-fixes": "^3.3.0",
-    "postcss-loader": "^2.1.3",
-    "raw-loader": "^0.5.1",
-    "style-loader": "^0.20.3",
-    "webpack": "^4.4.1",
-    "webpack-cli": "^2.0.13",
-    "webpack-node-externals": "^1.6.0"
+  "version": "0.2.0",
+  "license": "Beerware",
+  "private": true,
+  "workspaces": {
+    "packages": ["example", "example/client", "packages/*"],
+    "nohoist": [
+      "**/grpc",
+      "**/grpc/**",
+      "**/protobufjs",
+      "**/protobufjs/**",
+      "**/socket.io",
+      "**/socket.io/**"
+    ]
   },
   "scripts": {
     "build": "yarn build-carcer && yarn build-example",
     "build-carcer": "yarn build-client && yarn build-base",
-    "gen-json": "cd ./packages/base-core && yarn gen-json",
-    "build-client": "webpack --config client.config.js",
-    "build-base": "yarn gen-json && webpack --config base.config.js",
+    "build-client": "yarn build-client-core && yarn build-client-shell",
+    "build-client-core": "cd packages/client-core && yarn build",
+    "build-client-shell": "cd packages/client-shell && yarn build",
+    "build-base": "yarn build-base-core && yarn build-base-shell",
+    "build-base-core": "cd packages/base-core && yarn build",
+    "build-base-shell": "cd packages/base-shell && yarn build",
     "build-example": "cd example && yarn build",
     "build-docker": "cd example && yarn build-docker",
     "start": "cd example && yarn start",
     "start-docker": "cd example && yarn start-docker"
+  },
+  "dependencies": {
+    "grpc": "^1.10.1",
+    "protobufjs": "^6.8.6",
+    "socket.io": "^2.1.0"
   }
 }

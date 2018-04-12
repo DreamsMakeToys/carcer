@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "an example service implemented in node",
   "main": "./src/index.js",
+  "license": "Beerware",
   "dependencies": {
     "grpc": "^1.9.1",
     "protobufjs": "^6.8.6"

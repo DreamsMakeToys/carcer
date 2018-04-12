@@ -1,94 +1,39 @@
+import { map, toPairs } from 'ramda'
 import { h, Text, Component } from 'ink'
 import { connect } from 'ink-redux'
-import WindowSize from 'window-size'
-import Prompt from './prompt'
-import TextInput from './textinput'
 
-const Shell = ({ inputWidth, prompt, value, handleInput, handleSubmit }) => (
-  <div>
-    <Text>
-      {'╭──────────────────╮ '}
-      <Prompt
-        width={inputWidth - 2}
-        title={prompt.title}
-        message={prompt.message}
-      />
-    </Text>
-    <div />
-    <Text>
-      {'│││││ 〉 ⏣  〈 │││││'}
-      {'╭' + '─'.repeat(inputWidth) + '╮'}
-    </Text>
-    <div />
-    <Text>
-      {'││╭∩╮（︶︿︶）╭∩╮││'}
-      {'│ '}
-      <TextInput
-        width={inputWidth - 2}
-        value={value}
-        handleInput={handleInput}
-        handleSubmit={handleSubmit}
-      />
-      {' │'}
-    </Text>
-    <div />
-    <Text>
-      {'╰──────────────────╯'}
-      {'╰' + '─'.repeat(inputWidth) + '╯'}
-    </Text>
-  </div>
-)
+const Shell = ({ plugins }) => {
+  const pluginItems = map(_appendPluginItem, plugins)
+  return <div>{pluginItems}</div>
+}
+
+const _appendPluginItem = plugin => {
+  const name = plugin[0]
+  const state = JSON.stringify(plugin[1], null, 2)
+  return <PluginItem name={name} state={state} />
+}
+
+const PluginItem = ({ name, state }) => {
+  return (
+    <div>
+      <Text bold>{name}: </Text>
+      <Text>{state}</Text>
+    </div>
+  )
+}
 
 const applyBehavior = Comp => {
-  const select = state => ({
-    evaluateCommand: state.api.evaluate,
-    prompt: {
-      title: state.session.name,
-      message: state.session.description
-    }
-  })
   class Instance extends Component {
-    constructor(props) {
-      super(props)
-      const { width, height } = WindowSize.get()
-      this.state = {
-        size: { width, height },
-        value: ''
-      }
-      this.setSize = this.setSize.bind(this)
-      this.handleInput = this.handleInput.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
+    render({ plugins }, {}) {
+      return <Comp plugins={plugins} />
     }
-    componentDidMount() {
-      process.stdout.on('resize', this.setSize)
-    }
-    render({ prompt }, { size, value }) {
-      const inputWidth = size.width - 21 - 1
-      return (
-        <Comp
-          inputWidth={inputWidth}
-          prompt={prompt}
-          value={value}
-          handleInput={this.handleInput}
-          handleSubmit={this.handleSubmit}
-        />
-      )
-    }
-    setSize() {
-      const { width, height } = WindowSize.get()
-      const size = { width, height }
-      console.clear()
-      this.setState({ size })
-    }
-    handleInput(value) {
-      this.setState({ value })
-    }
-    handleSubmit(value) {
-      const { evaluateCommand } = this.props
-      evaluateCommand(value).then(() => {
-        this.setState({ value: '' })
-      })
-    }
+  }
+  const select = state => {
+    const trimmedPlugins = map(plugin => {
+      return plugin.state
+    }, state.plugins)
+    const plugins = toPairs(trimmedPlugins)
+    return { plugins }
   }
   return connect(select)(Instance)
 }

@@ -7,7 +7,10 @@ const createCore = (reducer, sagas) => {
   const reduxMiddleware = applyMiddleware(sagaMiddleware)
   const store = createStore(reducer, reduxMiddleware)
   const api = createApi(sagaMiddleware.run, sagas)
-  return api._initialize(api).then(() => store)
+  return api._initCore(api).then(() => {
+    delete api._initCore
+    return store
+  })
 }
 
 const createApi = (runSaga, sagas) => {
