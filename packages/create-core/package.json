@@ -1,0 +1,12 @@
+{
+  "name": "create-core",
+  "version": "0.3.0",
+  "module": "src/index.js",
+  "license": "Beerware",
+  "private": true,
+  "dependencies": {
+    "ramda": "^0.25.0",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0"
+  }
+}

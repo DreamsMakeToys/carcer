@@ -1,0 +1,22 @@
+{
+  "name": "base-shell",
+  "version": "0.3.0",
+  "main": "src/index.js",
+  "license": "Beerware",
+  "private": true,
+  "dependencies": {
+    "ink": "^0.4.1",
+    "ink-redux": "^1.0.0",
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13"
+  },
+  "scripts": {
+    "build": "webpack"
+  }
+}
