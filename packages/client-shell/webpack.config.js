@@ -3,13 +3,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const createFlexbugFixes = require('postcss-flexbugs-fixes')
 const createAutoprefixer = require('autoprefixer')
 
-const ASSETS_PATH = Path.resolve(__dirname, './packages/base-core/assets')
+const ASSETS_PATH = Path.resolve(__dirname, '../base-core/assets')
 
-module.exports = {
-  entry: './packages/client-shell/src/index.js',
+const ShellConfig = {
+  entry: './src/index.js',
   output: {
     path: ASSETS_PATH,
-    filename: 'client.js'
+    filename: 'client-shell.js'
   },
   mode: 'development',
   module: {
@@ -20,7 +20,40 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['babel-preset-stage-2'],
+            plugins: ['transform-react-jsx']
+          }
+        }
+      }
+    ]
+  },
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: './src/index.html',
+        to: ASSETS_PATH,
+        toType: 'dir'
+      }
+    ])
+  ]
+}
+
+const BodyConfig = {
+  entry: './src/default-body/index.js',
+  output: {
+    path: ASSETS_PATH,
+    filename: 'client-body.js',
+    library: 'ClientBody',
+    libraryTarget: 'window'
+  },
+  mode: 'development',
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
             plugins: ['transform-react-jsx']
           }
         }
@@ -61,14 +94,7 @@ module.exports = {
         ]
       }
     ]
-  },
-  plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: './packages/client-shell/src/index.html',
-        to: ASSETS_PATH,
-        toType: 'dir'
-      }
-    ])
-  ]
+  }
 }
+
+module.exports = [ShellConfig, BodyConfig]
