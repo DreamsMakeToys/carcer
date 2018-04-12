@@ -1,11 +1,11 @@
 import Child from 'child_process'
 import Grpc from 'grpc'
 import { Root } from 'protobufjs'
-import Ramda, { map } from 'ramda'
+import * as Ramda from 'ramda'
 import { eventChannel } from 'redux-saga'
 import SetupJSON from '../../assets/setup.proto.json'
 
-function loadWith(config) {
+function load(config) {
   Child.exec(config.script)
   return _setupWith(config).then(_bindService)
 }
@@ -29,7 +29,7 @@ function _setupWith(config) {
         const paletteStr = paletteBytes.toString('ascii')
         const barePalette = eval(paletteStr)() // TODO ??? USE `new Function`
         const injectTarget = _inject.bind(null, config.name)
-        const palette = map(injectTarget, barePalette)
+        const palette = Ramda.mapObjIndexed(injectTarget, barePalette)
         const reducerBytes = Buffer.from(response.reducer64, 'base64')
         const reducerStr = reducerBytes.toString('ascii')
         const reducer = eval(reducerStr)({ Ramda }) // TODO ??? USE `new Function`
@@ -43,11 +43,11 @@ function _setupWith(config) {
   })
 }
 
-function _inject(target, command) {
+function _inject(target, command, name) {
   if (command.select) {
     command.select = eval(command.select)
   }
-  return { target, ...command }
+  return { name, target, ...command }
 }
 
 function _bindService({ port, palette, reducer, serviceProto }) {
@@ -57,20 +57,21 @@ function _bindService({ port, palette, reducer, serviceProto }) {
       `localhost:${port}`,
       Grpc.credentials.createInsecure()
     )
-    resolve({ palette, service, reduce: reducer })
+    resolve({ palette, reduce: reducer, service })
   })
 }
 
 function executeWith(service, command) {
   return new Promise(resolve => {
-    const newPayload = {}
-    newPayload[command.name] = command.payload
-    command.payload = newPayload
-    service.execute(command, (requestError, response) => {
+    const { name, fields } = command
+    const commandPayload = {}
+    commandPayload[name] = fields
+    const commandMessage = { name, payload: commandPayload }
+    service.execute(commandMessage, (requestError, response) => {
       if (requestError) throw requestError
       resolve(response.payload[command.name])
     })
   })
 }
 
-export default { loadWith, executeWith }
+export default { load, executeWith }

@@ -1,25 +1,8 @@
-import { drop, reduce, split, trim, mapObjIndexed } from 'ramda'
+import { mapObjIndexed } from 'ramda'
 
-function parse(commandString) {
-  commandString = trim(commandString)
-  const tokens = split(/\s+/, commandString)
-  const name = tokens[0]
-  const args = drop(1, tokens)
-  const payload = reduce(_toPayload, {}, args)
-  return { name, payload }
-}
-
-function _toPayload(result, arg) {
-  const tokens = split(/=/, arg)
-  const field = tokens[0]
-  const value = tokens[1]
-  result[field] = value
-  return result
-}
-
-function massage(commandPayload, fields) {
-  const massageField = _massageField.bind(null, fields)
-  return mapObjIndexed(massageField, commandPayload)
+function massage(fields, config) {
+  const massageField = _massageField.bind(null, config)
+  return mapObjIndexed(massageField, fields)
 }
 
 function _massageField(types, value, name) {
@@ -34,4 +17,4 @@ function _massageField(types, value, name) {
   }
 }
 
-export { parse, massage }
+export { massage }

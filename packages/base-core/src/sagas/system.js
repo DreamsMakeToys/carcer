@@ -1,48 +1,20 @@
-import { mapObjIndexed } from 'ramda'
-import { put, all, call, spawn } from 'redux-saga/effects'
+import { put, call, spawn } from 'redux-saga/effects'
 import { Action } from '../constants'
-import Plugin from '../services/plugin'
 import Storage from '../services/storage'
-import Client from '../services/client'
-import { _processUserInput } from './command'
+import { _initPlugins } from './plugin'
+import { _processCommands as _commandProcessor } from './command'
+import { _initServer as _initClientServer } from './client'
 
-function* _initialize(api) {
-  delete api._initialize
+function* _initCore(api) {
   yield put({
     type: Action.SYSTEM_LOADING,
     payload: api
   })
   const config = yield call(Storage.fetchConfig)
-  const pluginsLoaded = mapObjIndexed(_loadPluginWith, config.plugins)
-  yield all(pluginsLoaded)
-  yield spawn(_processUserInput)
-  yield call(Client.listen)
-  yield put({
-    type: Action.SYSTEM_LOADED,
-    payload: { config }
-  })
+  yield call(_initPlugins, config)
+  yield spawn(_commandProcessor)
+  yield call(_initClientServer)
+  yield put({ type: Action.SYSTEM_LOADED })
 }
 
-function _loadPluginWith(config, key) {
-  return call(_pluginWith, {
-    name: key,
-    ...config
-  })
-}
-
-function* _pluginWith(config) {
-  const { service, reduce, palette } = yield call(Plugin.loadWith, config)
-  const state = reduce(undefined, { name: 'INIT_PLUGIN_STATE' })
-  yield put({
-    type: Action.PLUGIN_LOADED,
-    payload: {
-      name: config.name,
-      state,
-      reduce,
-      palette,
-      service
-    }
-  })
-}
-
-export default { _initialize }
+export default { _initCore }

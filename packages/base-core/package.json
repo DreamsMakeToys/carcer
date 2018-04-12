@@ -1,18 +1,31 @@
 {
   "name": "base-core",
   "version": "0.2.0",
-  "module": "src/index.js",
+  "main": "dist/module.js",
+  "license": "Beerware",
+  "private": true,
   "dependencies": {
-    "express": "^4.16.3",
-    "grpc": "^1.9.1",
+    "grpc": "^1.10.1",
     "js-yaml": "^3.10.0",
     "protobufjs": "^6.8.6",
     "ramda": "^0.25.0",
     "redux": "^3.7.2",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^0.16.0",
+    "socket.io": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-stage-2": "^6.24.1",
+    "raw-loader": "^0.5.1",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13",
+    "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
+    "build": "yarn gen-json && yarn build-module",
     "gen-json":
-      "pbjs -o ./assets/setup.proto.json -t json ./src/protos/setup.proto"
+      "pbjs -o ./assets/setup.proto.json -t json ./src/protos/setup.proto",
+    "build-module": "webpack"
   }
 }
