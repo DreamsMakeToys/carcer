@@ -1,12 +1,24 @@
-import { put } from 'redux-saga/effects'
+import { put, call } from 'redux-saga/effects'
 import { Action } from '../constants'
+import { _initConnection as _initBaseConnection } from './base'
 
-function* _initialize(api) {
-  delete api._initialize
+function* _initCore(api) {
   yield put({
     type: Action.SYSTEM_LOADING,
     payload: api
   })
+  const socket = yield call(_initBaseConnection)
+  yield put({
+    type: Action.SYSTEM_LOADED,
+    payload: { socket }
+  })
 }
 
-export default { _initialize }
+function* clearAlert(alert) {
+  yield put({
+    type: Action.CLEAR_ALERT,
+    payload: { alert }
+  })
+}
+
+export default { _initCore, clearAlert }

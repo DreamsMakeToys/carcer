@@ -1,3 +1,4 @@
 import system from './system'
+import command from './command'
 
-export default [system]
+export default [system, command]
