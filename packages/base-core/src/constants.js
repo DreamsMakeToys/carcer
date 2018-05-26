@@ -9,7 +9,6 @@ const Action = {
 }
 
 const BaseMessage = {
-  ALERT: 'ALERT',
   LOAD_PALETTE: 'LOAD_PALETTE'
 }
 

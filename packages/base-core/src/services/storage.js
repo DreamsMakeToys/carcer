@@ -1,17 +1,17 @@
 import Fs from 'fs'
-import Yaml from 'js-yaml'
 import BodyJS from 'raw-loader!../../assets/client-body.js'
 
 function fetchConfig() {
   return new Promise(resolve => {
     const readOptions = { encoding: 'utf8' }
-    Fs.readFile('./carcer.yaml', readOptions, (readError, data) => {
+    Fs.readFile('./carcer.json', readOptions, (readError, configJSON) => {
       if (readError) throw readError
-      const config = Yaml.safeLoad(data)
+      const config = JSON.parse(configJSON)
       resolve(config)
     })
   })
 }
+
 function fetchBundle() {
   return new Promise(resolve => {
     const readOptions = { encoding: 'utf8' }
