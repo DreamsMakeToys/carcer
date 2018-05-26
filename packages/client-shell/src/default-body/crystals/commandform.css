@@ -3,11 +3,18 @@
   flex-grow: 1;
 
   padding-left: 16px;
-  padding-right: 8px;
+  padding-right: 16px;
 
   display: flex;
   flex-direction: column;
   overflow: scroll;
+}
+
+@media (min-width: 960px) {
+  .fields {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
 }
 
 .field {
@@ -19,12 +26,4 @@
 
 .input {
   width: 100%;
-}
-
-.footer {
-  flex-shrink: 0;
-  padding: 8px;
-
-  display: flex;
-  justify-content: flex-end;
 }

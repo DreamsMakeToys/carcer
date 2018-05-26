@@ -1,3 +1,16 @@
-.toolbar {
+.container {
   flex-shrink: 0;
+  height: 48px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    height: 56px;
+  }
+}
+
+@media (min-width: 960px) {
+  .container {
+    height: 64px;
+  }
 }

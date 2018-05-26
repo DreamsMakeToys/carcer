@@ -1,3 +1,4 @@
+import { reduce } from 'ramda'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { TextField, TextFieldHelperText, Button } from 'rmwc'
@@ -6,9 +7,9 @@ import Toolbar from '../widgets/toolbar'
 import Layout from './layout.css'
 import Style from './commandform.css'
 
-const CommandForm = ({ name, execute, reset, fields }) => (
+const CommandForm = ({ name, executeCommand, reset, fields }) => (
   <div className={cx('mdc-typography', Layout.page)}>
-    <Toolbar title={name} onAccept={execute} onCancel={reset} />
+    <Toolbar title={name} onAccept={executeCommand} onCancel={reset} />
     <Fields fields={fields} />
   </div>
 )
@@ -16,16 +17,20 @@ const CommandForm = ({ name, execute, reset, fields }) => (
 const Fields = ({ fields }) => {
   const fieldNames = Object.keys(fields)
   const fieldItems = fieldNames.map((name, index) => {
-    const { type, inputRef } = fields[name]
-    return <FieldItem key={index} name={name} type={type} inputRef={inputRef} />
+    const { type, parameters, inputRef } = fields[name]
+    const appendParam = (result, param) => `${result}, ${param}`
+    const note = parameters
+      ? `(state${reduce(appendParam, '', parameters)}) => ${type}`
+      : type
+    return <FieldItem key={index} name={name} note={note} inputRef={inputRef} />
   })
   return <div className={Style.fields}>{fieldItems}</div>
 }
 
-const FieldItem = ({ name, inputRef, type }) => (
+const FieldItem = ({ name, inputRef, note }) => (
   <div className={Style.field}>
     <TextField className={Style.input} label={name} inputRef={inputRef} />
-    <TextFieldHelperText theme="secondary">{type}</TextFieldHelperText>
+    <TextFieldHelperText theme="secondary">{note}</TextFieldHelperText>
   </div>
 )
 
@@ -34,13 +39,15 @@ const applyBehavior = Comp => {
     constructor(props) {
       super(props)
       this.state = { fields: null }
-      this.execute = this.execute.bind(this)
+      this.executeCommand = this.executeCommand.bind(this)
     }
     static getDerivedStateFromProps({ command }) {
       const fieldNames = Object.keys(command.fields)
       const fields = fieldNames.reduce((result, name) => {
+        const field = command.fields[name]
         result[name] = {
-          type: command.fields[name],
+          type: field.type,
+          parameters: field.parameters,
           inputRef: React.createRef()
         }
         return result
@@ -54,17 +61,20 @@ const applyBehavior = Comp => {
         <Comp
           name={command.name}
           fields={fields}
-          execute={this.execute}
+          executeCommand={this.executeCommand}
           reset={reset}
         />
       )
     }
-    execute() {
+    executeCommand() {
       const { command, execute, reset } = this.props
       const { fields } = this.state
       const fieldNames = Object.keys(fields)
       const fieldValues = fieldNames.reduce((result, name) => {
-        result[name] = fields[name].inputRef.current.value
+        const fieldValue = fields[name].inputRef.current.value
+        if (fieldValue) {
+          result[name] = fields[name].inputRef.current.value
+        }
         return result
       }, {})
       execute({

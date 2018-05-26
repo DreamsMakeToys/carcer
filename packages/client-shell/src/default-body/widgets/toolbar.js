@@ -20,15 +20,17 @@ const Toolbar = ({ title, onCancel, onAccept }) => {
     acceptButton = <ToolbarIcon use="send" onClick={onAccept} />
   }
   return (
-    <RMToolbar className={Style.toolbar}>
-      <ToolbarRow>
-        <ToolbarSection alignStart>
-          {cancelButton}
-          <ToolbarTitle style={titleStyle}>{title}</ToolbarTitle>
-        </ToolbarSection>
-        <ToolbarSection alignEnd>{acceptButton}</ToolbarSection>
-      </ToolbarRow>
-    </RMToolbar>
+    <div className={Style.container}>
+      <RMToolbar fixed waterfall>
+        <ToolbarRow>
+          <ToolbarSection alignStart>
+            {cancelButton}
+            <ToolbarTitle style={titleStyle}>{title}</ToolbarTitle>
+          </ToolbarSection>
+          <ToolbarSection alignEnd>{acceptButton}</ToolbarSection>
+        </ToolbarRow>
+      </RMToolbar>
+    </div>
   )
 }
 
