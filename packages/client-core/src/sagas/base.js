@@ -15,9 +15,6 @@ function* _handleBase(channel) {
       case BaseMessage.LOAD_PALETTE:
         yield call(_handleLoadPalette, message)
         break
-      case BaseMessage.ALERT:
-        yield call(_handleAlert, message)
-        break
       case BaseMessage.DISCONNECTED:
         break
       default:
@@ -31,13 +28,5 @@ function* _handleLoadPalette(message) {
   yield put({
     type: Action.LOAD_PALETTE,
     payload: { palette }
-  })
-}
-
-function* _handleAlert(message) {
-  const { note } = message.payload
-  yield put({
-    type: Action.ALERT,
-    payload: { alert: { note } }
   })
 }
