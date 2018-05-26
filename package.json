@@ -1,7 +1,6 @@
 {
   "name": "carcer",
   "version": "0.3.0",
-  "license": "Beerware",
   "private": true,
   "workspaces": {
     "packages": ["example", "example/client", "packages/*"],

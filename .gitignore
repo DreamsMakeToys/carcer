@@ -1,6 +1,7 @@
 node_modules
 dist
 assets
+plugins
 yarn-error.log
 *.proto.json
 */bundle.js
