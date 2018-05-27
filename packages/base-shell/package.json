@@ -2,7 +2,6 @@
   "name": "base-shell",
   "version": "0.3.0",
   "main": "src/index.js",
-  "license": "Beerware",
   "private": true,
   "dependencies": {
     "ink": "^0.4.1",
@@ -17,6 +16,6 @@
     "webpack-cli": "^2.0.13"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "webpack --mode development"
   }
 }

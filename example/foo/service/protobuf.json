@@ -1,0 +1,86 @@
+{
+  "nested": {
+    "carcer": {
+      "nested": {
+        "Carcer": {
+          "methods": {
+            "execute": {
+              "requestType": "CommandRequest",
+              "responseType": "CommandResponse"
+            }
+          }
+        },
+        "CommandRequest": {
+          "fields": {
+            "name": {
+              "type": "string",
+              "id": 1
+            },
+            "payload": {
+              "type": "RequestPayload",
+              "id": 2
+            }
+          }
+        },
+        "RequestPayload": {
+          "oneofs": {
+            "requestPayload": {
+              "oneof": [
+                "greet"
+              ]
+            }
+          },
+          "fields": {
+            "greet": {
+              "type": "GreetRequest",
+              "id": 1
+            }
+          }
+        },
+        "GreetRequest": {
+          "fields": {
+            "first": {
+              "type": "string",
+              "id": 1
+            },
+            "last": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "CommandResponse": {
+          "fields": {
+            "payload": {
+              "type": "ResponsePayload",
+              "id": 1
+            }
+          }
+        },
+        "ResponsePayload": {
+          "oneofs": {
+            "responsePayload": {
+              "oneof": [
+                "greet"
+              ]
+            }
+          },
+          "fields": {
+            "greet": {
+              "type": "GreetResponse",
+              "id": 1
+            }
+          }
+        },
+        "GreetResponse": {
+          "fields": {
+            "greeting": {
+              "type": "string",
+              "id": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -12,6 +12,8 @@ A mechanism for projection
 4.  `yarn build`
 5.  `yarn start`
 
+_*Warning:*_ Don't run this while online. The current way expressions are handled allow for remote code execution. This will be addressed in the next version.
+
 ### Goals
 
 * **_generalize interaction_**

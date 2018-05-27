@@ -1,8 +1,7 @@
 const Path = require('path')
-const nodeExternals = require('webpack-node-externals')
+const createNodeExternals = require('webpack-node-externals')
 
 module.exports = {
-  mode: 'development',
   target: 'node',
   entry: './src/index.js',
   output: {
@@ -25,5 +24,5 @@ module.exports = {
       }
     ]
   },
-  externals: [nodeExternals(), 'grpc', 'protobufjs']
+  externals: [createNodeExternals(), 'grpc', 'protobufjs']
 }

@@ -11,7 +11,6 @@ const ShellConfig = {
     path: ASSETS_PATH,
     filename: 'client-shell.js'
   },
-  mode: 'development',
   module: {
     rules: [
       {
@@ -45,7 +44,6 @@ const BodyConfig = {
     library: 'ClientBody',
     libraryTarget: 'window'
   },
-  mode: 'development',
   module: {
     rules: [
       {

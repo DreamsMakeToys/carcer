@@ -1,30 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Notify from '../widgets/notify'
 import CommandForm from './commandform'
 import Palette from './palette'
 
-const App = ({
-  activeCommand,
-  resetActiveCommand,
-  palette,
-  beginExecution,
-  alerts,
-  clearAlert
-}) => {
-  let page = null
-  if (activeCommand) {
-    page = <CommandForm command={activeCommand} reset={resetActiveCommand} />
-  } else {
-    page = <Palette palette={palette} beginExecution={beginExecution} />
-  }
-  return (
-    <div>
-      {page}
-      <Notify alerts={alerts} dismiss={clearAlert} />
-    </div>
+const App = ({ activeCommand, resetActiveCommand, palette, beginExecution }) =>
+  activeCommand ? (
+    <CommandForm command={activeCommand} reset={resetActiveCommand} />
+  ) : (
+    <Palette palette={palette} beginExecution={beginExecution} />
   )
-}
 
 const applyBehavior = Comp => {
   class Instance extends Component {
@@ -35,7 +19,7 @@ const applyBehavior = Comp => {
       this.beginExecution = this.beginExecution.bind(this)
     }
     render() {
-      const { palette, alerts, clearAlert } = this.props
+      const { palette } = this.props
       const { activeCommand } = this.state
       return (
         <Comp
@@ -43,8 +27,6 @@ const applyBehavior = Comp => {
           resetActiveCommand={this.resetActiveCommand}
           palette={palette}
           beginExecution={this.beginExecution}
-          alerts={alerts}
-          clearAlert={clearAlert}
         />
       )
     }
@@ -62,9 +44,7 @@ const applyBehavior = Comp => {
   }
   const select = state => ({
     palette: state.palette,
-    execute: state.api.execute,
-    alerts: state.base.alerts,
-    clearAlert: state.api.clearAlert
+    execute: state.api.execute
   })
   return connect(select)(Instance)
 }

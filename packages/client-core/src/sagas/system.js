@@ -14,11 +14,4 @@ function* _initCore(api) {
   })
 }
 
-function* clearAlert(alert) {
-  yield put({
-    type: Action.CLEAR_ALERT,
-    payload: { alert }
-  })
-}
-
-export default { _initCore, clearAlert }
+export default { _initCore }

@@ -2,11 +2,10 @@
   "name": "base-core",
   "version": "0.3.0",
   "main": "dist/module.js",
-  "license": "Beerware",
   "private": true,
   "dependencies": {
+    "glob": "^7.1.2",
     "grpc": "^1.10.1",
-    "js-yaml": "^3.10.0",
     "protobufjs": "^6.8.6",
     "ramda": "^0.25.0",
     "redux": "^3.7.2",
@@ -23,9 +22,6 @@
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
-    "build": "yarn gen-json && yarn build-module",
-    "gen-json":
-      "pbjs -o ./assets/setup.proto.json -t json ./src/protos/setup.proto",
-    "build-module": "webpack"
+    "build": "webpack --mode development"
   }
 }

@@ -1,6 +1,0 @@
-name: 'Carcer'
-description: 'a mechanism for projection'
-plugins:
-  Foo:
-    port: 3000
-    script: 'docker run -p 3000:3000 carcer/example'

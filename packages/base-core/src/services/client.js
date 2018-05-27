@@ -1,5 +1,4 @@
 import Http from 'http'
-import Fs from 'fs'
 import createIO from 'socket.io'
 import { eventChannel, buffers } from 'redux-saga'
 import { ClientMessage, BaseMessage } from '../constants'
@@ -61,15 +60,8 @@ function loadPalette(socket, palette) {
   })
 }
 
-function alert(socket, note) {
-  socket.emit('message', {
-    type: BaseMessage.ALERT,
-    payload: { note }
-  })
-}
-
 function disconnect(socket) {
   socket.disconnect(true)
 }
 
-export default { listen, loadPalette, alert, disconnect }
+export default { listen, loadPalette, disconnect }

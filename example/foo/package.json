@@ -1,0 +1,19 @@
+{
+  "name": "carcer-foo",
+  "version": "0.3.0",
+  "private": true,
+  "dependencies": {
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.5.1",
+    "protobufjs": "^6.8.6",
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14"
+  },
+  "scripts": {
+    "build": "yarn build-json && yarn build-plugin",
+    "build-json": "pbjs -o ./service/protobuf.json -t json ./service/foo.proto",
+    "build-plugin": "webpack --mode development"
+  }
+}

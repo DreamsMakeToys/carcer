@@ -1,9 +1,8 @@
-import { merge } from 'ramda'
+import { merge, map } from 'ramda'
 import { put, actionChannel, take, call, select } from 'redux-saga/effects'
 import { Action } from '../constants'
 import { massage } from '../utils/command'
 import Plugin from '../services/plugin'
-import Client from '../services/client'
 
 function* execute(command) {
   yield put({
@@ -17,12 +16,18 @@ export function* _processCommands() {
   while (true) {
     const action = yield take(commandChannel)
     const command = action.payload
-    const { config, plugin } = yield select(reduxState => {
+    const { config, plugin, rootState } = yield select(reduxState => {
       const config = reduxState.palette[command.name]
       const plugin = reduxState.plugins[config.target]
-      return { config, plugin }
+      const rootState = map(_plugin => _plugin.state, reduxState.plugins)
+      return { config, plugin, rootState }
     })
-    command.fields = yield call(massage, command.fields, config.fields)
+    command.fields = yield call(
+      massage,
+      config.fields,
+      rootState,
+      command.fields
+    )
     if (config.select) {
       const selectedFields = config.select(plugin.state)
       command.fields = merge(command.fields, selectedFields)
@@ -40,9 +45,6 @@ export function* _processCommands() {
       type: Action.COMMAND_EXECUTED,
       payload: { plugin: plugin.name, state: newState }
     })
-    const note = `"${command.name}" has resolved`
-    const socket = yield select(state => state.client.socket)
-    yield call(Client.alert, socket, note)
   }
 }
 

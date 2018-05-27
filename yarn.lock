@@ -2833,15 +2833,6 @@ grpc@^1.10.1:
     node-pre-gyp "0.7.0"
     protobufjs "^5.0.0"
 
-grpc@^1.9.1:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/grpc/-/grpc-1.10.0.tgz#a3bab7f7e6b37727c5a6eb8427fc58775823edce"
-  dependencies:
-    lodash "^4.15.0"
-    nan "^2.0.0"
-    node-pre-gyp "^0.6.39"
-    protobufjs "^5.0.0"
-
 har-schema@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/har-schema/-/har-schema-1.0.5.tgz#d263135f43307c02c602afc8fe95970c0151369e"
@@ -3455,7 +3446,7 @@ js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
-js-yaml@^3.10.0, js-yaml@^3.4.3:
+js-yaml@^3.4.3:
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.11.0.tgz#597c1a8bd57152f26d622ce4117851a51f5ebaef"
   dependencies:
@@ -4025,13 +4016,13 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nan@^2.0.0, nan@^2.3.0:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.9.2.tgz#f564d75f5f8f36a6d9456cca7a6c4fe488ab7866"
-
 nan@^2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
+
+nan@^2.3.0:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.9.2.tgz#f564d75f5f8f36a6d9456cca7a6c4fe488ab7866"
 
 nanomatch@^1.2.9:
   version "1.2.9"
@@ -6236,13 +6227,6 @@ wide-align@^1.1.0:
 window-size@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.4.tgz#f8e1aa1ee5a53ec5bf151ffa09742a6ad7697876"
-
-window-size@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/window-size/-/window-size-1.1.0.tgz#3b402d3244f35561db2c9761ad9d1e5286b07a2d"
-  dependencies:
-    define-property "^1.0.0"
-    is-number "^3.0.0"
 
 worker-farm@^1.5.2:
   version "1.6.0"

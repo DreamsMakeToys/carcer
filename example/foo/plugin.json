@@ -1,0 +1,7 @@
+{
+  "name": "foo",
+  "service": {
+    "port": 8080,
+    "start": "node index.js 8080"
+  }
+}

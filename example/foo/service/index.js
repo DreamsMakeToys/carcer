@@ -1,19 +1,14 @@
 const { Root } = require('protobufjs')
 const { loadObject, Server, ServerCredentials } = require('grpc')
-FooProtoJSON = require('./plugin/foo.proto.json')
-const Plugin = require('./plugin')
+FooProto = require('./protobuf.json')
 
 function runServerOn(port) {
-  const fooProto = Root.fromJSON(FooProtoJSON)
+  const fooProto = Root.fromJSON(FooProto)
   const { Carcer } = loadObject(fooProto).carcer
   const server = new Server()
-  server.addService(Carcer.service, { setup, execute })
+  server.addService(Carcer.service, { execute })
   server.bind(`0.0.0.0:${port}`, ServerCredentials.createInsecure())
   server.start()
-}
-
-function setup(call, respond) {
-  respond(null, Plugin)
 }
 
 function execute(call, respond) {
