@@ -1,8 +1,8 @@
-module.exports = () => ({
+export default {
   register: {
     fields: {
-      first: 'STRING',
-      last: 'STRING'
+      first: { type: 'STRING' },
+      last: { type: 'STRING' }
     }
   },
   greet: {
@@ -12,4 +12,4 @@ module.exports = () => ({
     }),
     forward: true
   }
-})
+}

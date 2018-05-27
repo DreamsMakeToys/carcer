@@ -1,19 +1,10 @@
 {
   "name": "carcer-example",
   "version": "0.3.0",
-  "description": "an example service implemented in node",
-  "main": "./src/index.js",
-  "license": "Beerware",
-  "dependencies": {
-    "grpc": "^1.9.1",
-    "protobufjs": "^6.8.6"
-  },
+  "private": true,
   "scripts": {
-    "build": "yarn gen-json",
-    "gen-json": "pbjs -o ./foo/plugin/foo.proto.json -t json ./foo/foo.proto",
-    "build-docker": "docker build -t carcer/example .",
-    "start": "cd ./werk && node ../../dist/carcer.js",
-    "start-docker": "cd ./werk-docker && node ../../dist/carcer.js",
-    "start-service": "cd ./foo && node index.js"
+    "build": "yarn build-foo",
+    "build-foo": "cd ./foo && yarn build",
+    "start": "cd ./werk && node ../../dist/carcer.js"
   }
 }

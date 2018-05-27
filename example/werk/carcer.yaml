@@ -1,6 +1,0 @@
-name: 'Carcer'
-description: 'a mechanism for projection'
-plugins:
-  Foo:
-    port: 8080
-    script: 'cd ../foo && node index.js 8080'
